@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+import { guides } from "../data/site";
+
+const title = "Thank You | NH Well Water Treatment";
+const description = "Your request has been received. A licensed local contractor will reach out soon.";
+
+const topGuides = guides.slice(0, 3);
+---
+
+<BaseLayout title={title} description={description} noindex={true}>
+  <section class="py-20 sm:py-28">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="inline-flex h-16 w-16 items-center justify-center rounded-full bg-brand-50 text-brand-700">
+        <Icon name="circle-check" size={36} />
+      </span>
+      <h1 class="mt-6 text-3xl sm:text-4xl font-bold text-ink-900">Thank you. Your request is in.</h1>
+      <p class="mt-4 text-lg leading-relaxed text-ink-700">
+        We have received your request and will connect you with a licensed local water
+        treatment contractor. They will reach out to schedule your free in-home water
+        test and provide a written quote. There is no obligation.
+      </p>
+      <p class="mt-4 text-ink-700">
+        While you wait, these guides are a good place to learn what to look for in New
+        Hampshire well water.
+      </p>
+
+      <div class="mt-8 grid gap-4 text-left sm:grid-cols-1">
+        {
+          topGuides.map((guide) => (
+            <a
+              href={`/guides/${guide.slug}`}
+              class="group flex items-center justify-between gap-3 rounded-lg border border-ink-200 bg-white px-5 py-4 shadow-sm transition-shadow hover:shadow-md"
+            >
+              <span class="flex items-center gap-3">
+                <Icon name="book-open" size={20} class="shrink-0 text-brand-700" />
+                <span class="font-medium text-ink-900 group-hover:text-brand-700">{guide.title}</span>
+              </span>
+              <Icon name="arrow-right" size={18} class="shrink-0 text-brand-700" />
+            </a>
+          ))
+        }
+      </div>
+
+      <a
+        href="/"
+        class="mt-10 inline-flex items-center gap-1 font-semibold text-brand-700 hover:gap-2 transition-all"
+      >
+        Back to home
+        <Icon name="arrow-right" size={16} />
+      </a>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,245 @@
+---
+import "../styles/global.css";
+import Icon from "../components/Icon.astro";
+import {
+  site,
+  headerDisclosure,
+  footerDisclaimer,
+  services,
+  guides,
+  navLinks,
+} from "../data/site";
+import { builtLocations } from "../data/builtLocations";
+
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+  ogType?: string;
+  // Optional canonical override. Defaults to the current path on the
+  // production domain.
+  canonicalPath?: string;
+  // JSON-LD objects to inject. Allowed types only (see COMPLIANCE_STANDARDS.md).
+  schema?: Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  noindex = false,
+  ogType = "website",
+  canonicalPath,
+  schema = [],
+} = Astro.props;
+
+const path = canonicalPath ?? Astro.url.pathname;
+const canonical = new URL(path, site.productionUrl).href;
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={site.brand} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    {
+      schema.map((obj) => (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify(obj)}
+        />
+      ))
+    }
+  </head>
+  <body class="min-h-screen flex flex-col bg-white text-ink-800 pb-16 sm:pb-0">
+    <!-- Header disclosure strip (FTC net-impression: must be encountered, not footer-only) -->
+    <div class="bg-ink-100 text-ink-700 text-xs sm:text-sm">
+      <p class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1.5 text-center">
+        {headerDisclosure}
+      </p>
+    </div>
+
+    <header class="border-b border-ink-200 sticky top-0 z-30 bg-white/95 backdrop-blur">
+      <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4 py-3">
+        <a href="/" class="flex items-center gap-2 font-bold text-ink-900 text-lg shrink-0">
+          <span class="inline-flex h-8 w-8 items-center justify-center rounded-md bg-brand-700 text-white">
+            <Icon name="droplet" size={18} />
+          </span>
+          <span>NH Well Water Treatment</span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-6">
+          {
+            navLinks.map((link) => (
+              <a
+                href={link.href}
+                class="text-sm font-medium text-ink-700 hover:text-brand-700 transition-colors"
+              >
+                {link.label}
+              </a>
+            ))
+          }
+        </div>
+
+        <div class="flex items-center gap-2">
+          <a
+            href={`tel:${site.phoneTel}`}
+            class="hidden sm:inline-flex items-center gap-2 rounded-md bg-accent-500 px-4 py-2 text-sm font-semibold text-ink-900 hover:bg-accent-600 transition-colors"
+          >
+            <Icon name="phone" size={16} />
+            Call {site.phoneDisplay}
+          </a>
+
+          <details class="md:hidden relative">
+            <summary
+              class="list-none cursor-pointer p-2 text-ink-700 [&::-webkit-details-marker]:hidden"
+              aria-label="Open menu"
+            >
+              <Icon name="menu" size={24} />
+            </summary>
+            <div
+              class="absolute right-0 top-full mt-2 w-60 rounded-lg border border-ink-200 bg-white p-3 shadow-lg z-50"
+            >
+              <div class="flex flex-col">
+                <a href="/" class="rounded px-3 py-2 text-sm font-medium text-ink-700 hover:bg-ink-100">Home</a>
+                {
+                  navLinks.map((link) => (
+                    <a
+                      href={link.href}
+                      class="rounded px-3 py-2 text-sm font-medium text-ink-700 hover:bg-ink-100"
+                    >
+                      {link.label}
+                    </a>
+                  ))
+                }
+                <a
+                  href={`tel:${site.phoneTel}`}
+                  class="mt-2 inline-flex items-center justify-center gap-2 rounded-md bg-accent-500 px-4 py-2 text-sm font-semibold text-ink-900"
+                >
+                  <Icon name="phone" size={16} />
+                  Call {site.phoneDisplay}
+                </a>
+              </div>
+            </div>
+          </details>
+        </div>
+      </nav>
+    </header>
+
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <footer class="bg-ink-900 text-ink-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
+          <div class="lg:col-span-1">
+            <p class="flex items-center gap-2 font-bold text-white text-lg">
+              <Icon name="droplet" size={18} />
+              {site.brand}
+            </p>
+            <p class="mt-3 text-sm text-ink-400">
+              Connecting New Hampshire well owners with licensed local water
+              treatment contractors for a free in-home water test and quote.
+            </p>
+            <a
+              href={`tel:${site.phoneTel}`}
+              class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-accent-400 hover:text-accent-300"
+            >
+              <Icon name="phone" size={16} />
+              {site.phoneDisplay}
+            </a>
+            <p class="mt-2 text-xs text-ink-400">{site.hours}</p>
+          </div>
+
+          <div>
+            <h2 class="text-sm font-semibold uppercase tracking-wide text-white">Services</h2>
+            <ul class="mt-3 space-y-2">
+              {
+                services.map((s) => (
+                  <li>
+                    <a href={`/services/${s.slug}`} class="text-sm text-ink-300 hover:text-white">
+                      {s.name}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <div>
+            <h2 class="text-sm font-semibold uppercase tracking-wide text-white">Locations</h2>
+            <ul class="mt-3 space-y-2">
+              {
+                builtLocations.map((l) => (
+                  <li>
+                    <a href={`/locations/${l.slug}`} class="text-sm text-ink-300 hover:text-white">
+                      {l.town}, {site.stateAbbr}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <div>
+            <h2 class="text-sm font-semibold uppercase tracking-wide text-white">Guides</h2>
+            <ul class="mt-3 space-y-2">
+              {
+                guides.map((g) => (
+                  <li>
+                    <a href={`/guides/${g.slug}`} class="text-sm text-ink-300 hover:text-white">
+                      {g.title}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <div>
+            <h2 class="text-sm font-semibold uppercase tracking-wide text-white">Company</h2>
+            <ul class="mt-3 space-y-2">
+              <li><a href="/how-it-works" class="text-sm text-ink-300 hover:text-white">How It Works</a></li>
+              <li><a href="/about" class="text-sm text-ink-300 hover:text-white">About</a></li>
+              <li><a href="/contact" class="text-sm text-ink-300 hover:text-white">Contact</a></li>
+              <li><a href="/privacy" class="text-sm text-ink-300 hover:text-white">Privacy Policy</a></li>
+              <li><a href="/terms" class="text-sm text-ink-300 hover:text-white">Terms of Service</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-10 border-t border-ink-800 pt-8">
+          <p class="text-xs leading-relaxed text-ink-400">{footerDisclaimer}</p>
+          <p class="mt-4 text-xs text-ink-500">
+            &copy; {year} {site.legalEntity} ({site.legalState}). All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Sticky mobile click-to-call bar -->
+    <a
+      href={`tel:${site.phoneTel}`}
+      class="sm:hidden fixed bottom-0 inset-x-0 z-40 flex items-center justify-center gap-2 bg-accent-500 px-4 py-4 text-base font-semibold text-ink-900 shadow-[0_-2px_10px_rgba(0,0,0,0.15)]"
+    >
+      <Icon name="phone" size={20} />
+      Call for a Free Water Test
+    </a>
+  </body>
+</html>

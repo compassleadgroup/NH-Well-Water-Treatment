@@ -1,0 +1,148 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import Icon from "../components/Icon.astro";
+import { site } from "../data/site";
+
+const title = "How It Works | NH Well Water Treatment";
+const description =
+  "How we connect New Hampshire well owners with licensed local water treatment contractors for a free in-home test and a no-obligation quote.";
+
+const crumbs = [
+  { label: "Home", href: "/" },
+  { label: "How It Works", href: "/how-it-works" },
+];
+
+const steps = [
+  {
+    title: "You tell us about your water",
+    body: "Use the form or call us. Tell us your town and what prompted the search, whether that is an arsenic result, a home sale, staining, or simply wanting a full picture of your water. If you are not sure what to test for, that is fine. You can request a full test.",
+  },
+  {
+    title: "We connect you with a licensed local contractor",
+    body: "We match you with a licensed local water treatment contractor who works in your part of New Hampshire and handles the contaminants you are concerned about. We pass along the details you shared so the contractor can prepare.",
+  },
+  {
+    title: "The contractor tests, explains, and quotes",
+    body: "The contractor visits your home, tests your water, and walks you through the results in plain language. If treatment makes sense, you get a written, itemized quote. If it does not, a good contractor will tell you that too. There is no obligation either way.",
+  },
+];
+
+const expectations = [
+  "A free in-home water test",
+  "A plain explanation of your results, not a sales pitch",
+  "A written, itemized quote for any recommended system",
+  "No obligation to move forward",
+];
+
+const criteria = [
+  "Hold any New Hampshire licensing required for the work, including a licensed plumber where the installation calls for one",
+  "Carry current general liability insurance",
+  "Provide transparent, itemized written estimates before any work begins",
+  "Offer written workmanship warranties",
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="bg-gradient-to-b from-brand-50 to-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <Breadcrumbs items={crumbs} />
+      <p class="mt-6 text-sm font-semibold uppercase tracking-wide text-brand-700">How It Works</p>
+      <h1 class="mt-3 text-3xl sm:text-4xl font-bold leading-tight text-ink-900">
+        How We Connect You With a Local Water Treatment Contractor
+      </h1>
+      <p class="mt-5 text-lg leading-relaxed text-ink-700">
+        NH Well Water Treatment is a marketing service operated by Compass Camper LLC.
+        We are not a contractor. We do not test water and we do not install systems.
+        What we do is simple: we connect New Hampshire well owners with licensed local
+        water treatment contractors, so the first step is easy and free.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 sm:py-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl sm:text-3xl font-bold text-ink-900">Three steps, no cost to start</h2>
+      <ol class="mt-8 space-y-8">
+        {
+          steps.map((step, i) => (
+            <li class="flex gap-4">
+              <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-700 font-bold text-white">
+                {i + 1}
+              </span>
+              <div>
+                <h3 class="text-lg font-semibold text-ink-900">{step.title}</h3>
+                <p class="mt-2 text-ink-700 leading-relaxed">{step.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="bg-ink-50 border-y border-ink-200">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <h2 class="text-2xl sm:text-3xl font-bold text-ink-900">What to expect from the contractor</h2>
+      <ul class="mt-6 space-y-3">
+        {
+          expectations.map((item) => (
+            <li class="flex items-start gap-3 text-ink-700">
+              <Icon name="check" size={20} class="mt-0.5 shrink-0 text-brand-700" />
+              <span>{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <h2 class="mt-12 text-2xl sm:text-3xl font-bold text-ink-900">
+        What the contractor provides
+      </h2>
+      <p class="mt-3 text-ink-700">
+        We connect you with independent, licensed local contractors. We ask that the
+        contractors we work with meet objective standards:
+      </p>
+      <ul class="mt-6 space-y-3">
+        {
+          criteria.map((item) => (
+            <li class="flex items-start gap-3 text-ink-700">
+              <Icon name="circle-check" size={20} class="mt-0.5 shrink-0 text-brand-700" />
+              <span>{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mt-4 text-sm text-ink-600">
+        New Hampshire licenses water well and pump contractors, and some treatment
+        installations require a licensed plumber. Licensing requirements vary by the
+        work, so a contractor carries the licensing required for your specific job.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 sm:py-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-2xl sm:text-3xl font-bold text-ink-900">Ready to start with a free test?</h2>
+      <p class="mt-3 text-ink-700">
+        Request a free in-home water test and a written quote from a licensed local
+        contractor. No obligation.
+      </p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+        <a
+          href="/contact"
+          class="inline-flex items-center justify-center gap-2 rounded-md bg-accent-500 px-6 py-3.5 text-base font-semibold text-ink-900 hover:bg-accent-600 transition-colors"
+        >
+          <Icon name="circle-check" size={20} />
+          Get a Free Water Test and Quote
+        </a>
+        <a
+          href={`tel:${site.phoneTel}`}
+          class="inline-flex items-center justify-center gap-2 rounded-md border border-brand-700 px-6 py-3.5 text-base font-semibold text-brand-700 hover:bg-brand-50 transition-colors"
+        >
+          <Icon name="phone" size={18} />
+          Call {site.phoneDisplay}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

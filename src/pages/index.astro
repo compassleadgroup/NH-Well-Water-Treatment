@@ -1,0 +1,377 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+import LocationCard from "../components/LocationCard.astro";
+import GuideCard from "../components/GuideCard.astro";
+import ContactForm from "../components/ContactForm.astro";
+import FAQ from "../components/FAQ.astro";
+import Icon from "../components/Icon.astro";
+import { site, services, guides } from "../data/site";
+import { builtLocations } from "../data/builtLocations";
+
+const title = "New Hampshire Well Water Treatment | Arsenic & Uranium";
+const description =
+  "Connecting New Hampshire well owners with licensed local contractors for arsenic, uranium, and whole-house treatment. Free in-home water test and quote.";
+
+const trustBar = [
+  "Licensed and insured local contractors",
+  "Free in-home water test",
+  "No-obligation written quotes",
+  "Whole-house and point-of-use systems",
+  "New Hampshire 5 ppb arsenic standard",
+];
+
+const steps = [
+  {
+    title: "Tell us about your water",
+    body: "Share your concern, or just request a free test. It takes a couple of minutes and there is no cost or obligation.",
+  },
+  {
+    title: "We connect you with a local contractor",
+    body: "You are matched with a licensed local water treatment contractor who works in your part of New Hampshire.",
+  },
+  {
+    title: "Get a test and a written quote",
+    body: "The contractor tests your water in your home, explains the results in plain language, and gives you a written, itemized quote.",
+  },
+];
+
+// Common NH well contaminants. Health framing kept factual and sourced to NHDES
+// and EPA, never alarmist. Each links to the relevant service or guide.
+const contaminants = [
+  {
+    name: "Arsenic",
+    effect:
+      "Odorless and tasteless. Long-term exposure is linked to higher risk of several cancers and other health effects, which is why New Hampshire set a 5 ppb standard.",
+    href: "/services/arsenic-treatment",
+  },
+  {
+    name: "Uranium",
+    effect:
+      "A naturally occurring radioactive metal from bedrock that can affect the kidneys at elevated levels.",
+    href: "/services/uranium-treatment",
+  },
+  {
+    name: "Radon in water",
+    effect:
+      "A radioactive gas. Radon released from water into indoor air adds to the lung-cancer risk already tracked for radon in air.",
+    href: "/services/radon-in-water-treatment",
+  },
+  {
+    name: "Iron and manganese",
+    effect:
+      "Cause rust and black staining, a metallic taste, and buildup in plumbing and fixtures.",
+    href: "/services/iron-manganese-treatment",
+  },
+  {
+    name: "Hardness",
+    effect:
+      "Not a health concern, but scale from hard water shortens the life of water heaters and appliances and cuts soap efficiency.",
+    href: "/services/whole-house-water-treatment",
+  },
+  {
+    name: "Bacteria",
+    effect:
+      "A sign that surface water or other contamination may be reaching the well. NHDES recommends testing for bacteria every year.",
+    href: "/guides/nh-well-water-contaminants",
+  },
+];
+
+const faqs = [
+  {
+    // Source: arsenic is odorless/tasteless; NHDES recommends testing. NHDES DWGB-3-2.
+    question: "How do I know if my well has arsenic?",
+    answer:
+      "You cannot see, taste, or smell arsenic, so the only way to know is to test your water. A licensed local contractor can collect a sample during a free in-home visit, or you can order a test through a New Hampshire accredited laboratory. NHDES recommends including arsenic in a standard well-water analysis.",
+  },
+  {
+    // Source: NHDES/EPA health context; NH set 5 ppb MCL effective 2021.
+    question: "Is arsenic in well water dangerous?",
+    answer:
+      "Long-term exposure to arsenic in drinking water is linked by NHDES and the EPA to a higher risk of certain cancers and other health effects, which is why New Hampshire lowered its enforceable arsenic standard to 5 parts per billion in 2021. This is a long-term exposure issue, not an emergency, and it is very treatable once you know your level.",
+  },
+  {
+    question: "What does arsenic treatment cost in New Hampshire?",
+    answer:
+      "Cost depends on your arsenic level, whether other contaminants are present, and whether you choose a point-of-use system for drinking water or a whole-house system. A point-of-use system is the lower-cost option, and a whole-house system that treats several contaminants costs more. The free in-home test and written quote give you a real number for your home.",
+  },
+  {
+    question: "Do I need a whole-house system or just a drinking-water system?",
+    answer:
+      "It depends on which contaminants are present and how you use your water. Some homeowners only need a point-of-use system at the kitchen tap, while homes with several contaminants or higher levels often benefit from a whole-house system. The contractor recommends the right approach after testing your water.",
+  },
+  {
+    // Source: NHDES DWGB-2-1 suggested testing frequency.
+    question: "How often should I test my well?",
+    answer:
+      "NHDES recommends a standard water analysis every three to five years, testing for bacteria and nitrate every year, and testing for radon and uranium every three to five years. It is also worth testing after any change in taste, color, or odor, or when buying or selling a home.",
+  },
+  {
+    question: "Is the water test really free?",
+    answer:
+      "Yes. The licensed contractor you are matched with provides a free in-home water test and a written, no-obligation quote. You are under no obligation to move forward.",
+  },
+  {
+    question: "Do you install the system?",
+    answer:
+      "No. NH Well Water Treatment is a marketing service operated by Compass Camper LLC. We connect you with a licensed local water treatment contractor who tests your water and installs any system. We do not perform water treatment work ourselves.",
+  },
+  {
+    question: "How long does treatment take to install?",
+    answer:
+      "It varies by the system and your plumbing. A point-of-use system is usually a short visit, while a whole-house system takes longer. The contractor gives you a realistic timeline as part of the written quote.",
+  },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: site.brand,
+    description:
+      "A marketing and lead generation service that connects New Hampshire private-well homeowners with licensed local water treatment contractors.",
+    url: site.productionUrl,
+    areaServed: { "@type": "State", name: "New Hampshire" },
+    telephone: site.phoneTel,
+    email: site.contactEmail,
+    provider: { "@type": "Organization", name: site.legalEntity },
+  },
+];
+
+const topGuides = guides.slice(0, 3);
+---
+
+<BaseLayout title={title} description={description} schema={schema}>
+  <!-- Section 1: Hero -->
+  <section class="bg-gradient-to-b from-brand-50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <div class="max-w-3xl">
+        <p class="text-sm font-semibold uppercase tracking-wide text-brand-700">
+          New Hampshire well water
+        </p>
+        <h1 class="mt-3 text-3xl sm:text-5xl font-bold leading-tight text-ink-900">
+          New Hampshire Well Water Treatment: Arsenic, Uranium, and Whole-House Filtration
+        </h1>
+        <p class="mt-5 text-lg leading-relaxed text-ink-700">
+          Arsenic and uranium occur naturally in New Hampshire bedrock, and both are
+          odorless and tasteless, so a test is the only way to know what is in your
+          well. We connect New Hampshire well owners with licensed local contractors
+          for a free in-home water test and quote.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a
+            href="/contact"
+            class="inline-flex items-center justify-center gap-2 rounded-md bg-accent-500 px-6 py-3.5 text-base font-semibold text-ink-900 hover:bg-accent-600 transition-colors"
+          >
+            <Icon name="circle-check" size={20} />
+            Get a Free Water Test and Quote
+          </a>
+          <a
+            href={`tel:${site.phoneTel}`}
+            class="inline-flex items-center justify-center gap-2 rounded-md border border-brand-700 px-6 py-3.5 text-base font-semibold text-brand-700 hover:bg-brand-50 transition-colors"
+          >
+            <Icon name="phone" size={18} />
+            Call {site.phoneDisplay}
+          </a>
+        </div>
+      </div>
+
+      <ul class="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          trustBar.map((item) => (
+            <li class="flex items-start gap-2 text-sm text-ink-700">
+              <Icon name="check" size={18} class="mt-0.5 shrink-0 text-brand-700" />
+              {item}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Section 2: Local context -->
+  <section class="py-16 sm:py-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl sm:text-3xl font-bold text-ink-900">
+        Why New Hampshire Well Water Carries Arsenic, Uranium, and Radon
+      </h2>
+      <div class="mt-6 space-y-4 text-ink-700 leading-relaxed">
+        <p>
+          New Hampshire is the Granite State for a reason. Much of the state sits on
+          plutonic igneous rock like granite and on metamorphic bedrock, and that
+          geology has a high potential to release uranium and its radioactive decay
+          product, radon, into groundwater. The same bedrock is a natural source of
+          arsenic. Wells drilled into this fractured bedrock tend to carry higher
+          levels of these naturally occurring contaminants than shallow sand and
+          gravel wells.
+          <!-- Source: USGS New England WSC, New maps predict areas of elevated radon, uranium in NH groundwater, https://www.usgs.gov/centers/new-england-water-science-center/news/new-maps-predict-areas-elevated-radon-uranium-new ; NHDES DWGB-3-11 Radionuclides in Drinking Water -->
+        </p>
+        <p>
+          These contaminants matter here because so many households draw their own
+          water. About 46 percent of New Hampshire residents, roughly 520,000 people,
+          rely on private wells, and private wells are not covered by the federal rules
+          that govern public water systems. No agency tests your well for you, so
+          testing and any treatment are the homeowner's responsibility.
+          <!-- Source: NHDES Private Wells, https://www.des.nh.gov/water/drinking-water/private-wells ; EPA Private Drinking Water Wells, https://www.epa.gov/privatewells -->
+        </p>
+        <p>
+          Arsenic is the contaminant that brings most New Hampshire homeowners to a
+          water test. Because it is invisible, a
+          <a href="https://pubs.usgs.gov/fs/fs-051-03/" rel="noopener noreferrer" class="text-brand-700 underline">United States Geological Survey study</a>
+          of private bedrock wells in southeastern New Hampshire is telling: nearly one
+          in five wells exceeded the federal arsenic limit of 10 micrograms per liter,
+          and the share was higher in parts of Hillsborough and Strafford counties. In
+          2021, New Hampshire lowered its own enforceable standard for arsenic to 5
+          parts per billion, half the federal limit, becoming one of the first states
+          in the country to do so.
+          <!-- Source: USGS FS-051-03, https://pubs.usgs.gov/fs/fs-051-03/ ; NHDES, More Protective Arsenic Standard Will Reduce Risk for Many, https://www.des.nh.gov/news-and-media/blog/more-protective-arsenic-standard-will-reduce-risk-many -->
+        </p>
+        <p>
+          None of this is cause for panic. Arsenic, uranium, and radon are long-term
+          exposure issues, not emergencies, and every one of them is treatable once you
+          know your levels. The sensible first step is a test.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Services grid -->
+  <section class="bg-ink-50 border-y border-ink-200">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <h2 class="text-2xl sm:text-3xl font-bold text-ink-900">
+        Water Treatment Services Available Through Local Contractors
+      </h2>
+      <p class="mt-3 max-w-3xl text-ink-700">
+        Each service below is provided by the licensed local contractor you are
+        matched with, sized to your water and your home. Start with a test, and the
+        contractor recommends the right system from there.
+      </p>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {services.map((service) => <ServiceCard service={service} />)}
+      </div>
+      <a
+        href="/services"
+        class="mt-8 inline-flex items-center gap-1 font-semibold text-brand-700 hover:gap-2 transition-all"
+      >
+        See all services
+        <Icon name="arrow-right" size={16} />
+      </a>
+    </div>
+  </section>
+
+  <!-- Section 4: How matching works -->
+  <section class="bg-brand-900 text-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <h2 class="text-2xl sm:text-3xl font-bold">How It Works</h2>
+      <p class="mt-3 max-w-3xl text-brand-100">
+        We are a matching service, not a contractor. Here is what that means for you.
+      </p>
+      <div class="mt-10 grid gap-8 sm:grid-cols-3">
+        {
+          steps.map((step, i) => (
+            <div>
+              <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent-500 font-bold text-ink-900">
+                {i + 1}
+              </span>
+              <h3 class="mt-4 text-lg font-semibold">{step.title}</h3>
+              <p class="mt-2 text-brand-100 leading-relaxed">{step.body}</p>
+            </div>
+          ))
+        }
+      </div>
+      <a
+        href="/how-it-works"
+        class="mt-8 inline-flex items-center gap-1 font-semibold text-accent-400 hover:text-accent-300"
+      >
+        See how matching works
+        <Icon name="arrow-right" size={16} />
+      </a>
+    </div>
+  </section>
+
+  <!-- Section 5: What gets tested and treated -->
+  <section class="py-16 sm:py-20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl sm:text-3xl font-bold text-ink-900">
+        Common New Hampshire Well Water Contaminants
+      </h2>
+      <p class="mt-3 max-w-3xl text-ink-700">
+        A standard well test looks for more than arsenic. These are the contaminants
+        New Hampshire well owners run into most, and the service that addresses each.
+        <!-- Source: NHDES Suggested Water Quality Testing for Private Wells, DWGB-2-1, https://www.des.nh.gov/sites/g/files/ehbemt341/files/documents/2020-01/dwgb-2-1.pdf -->
+      </p>
+      <div class="mt-8 grid gap-4 sm:grid-cols-2">
+        {
+          contaminants.map((c) => (
+            <a
+              href={c.href}
+              class="group flex gap-3 rounded-lg border border-ink-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
+            >
+              <Icon name="droplet" size={20} class="mt-0.5 shrink-0 text-brand-700" />
+              <span>
+                <span class="block font-semibold text-ink-900 group-hover:text-brand-700">{c.name}</span>
+                <span class="mt-1 block text-sm leading-relaxed text-ink-700">{c.effect}</span>
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: Coverage -->
+  <section class="bg-ink-50 border-y border-ink-200">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <h2 class="text-2xl sm:text-3xl font-bold text-ink-900">
+        Serving Well Owners Across New Hampshire
+      </h2>
+      <p class="mt-3 max-w-3xl text-ink-700">
+        Demand is concentrated in the Lakes Region and the inland Strafford and
+        Seacoast areas, where private wells are common. These are some of the towns we
+        serve.
+      </p>
+      <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {builtLocations.map((location) => <LocationCard location={location} />)}
+      </div>
+      <p class="mt-6 text-ink-700">
+        Do not see your town? <a href="/contact" class="text-brand-700 underline">Call us</a> and we
+        will connect you with a contractor who serves your area.
+      </p>
+    </div>
+  </section>
+
+  <!-- Guides preview -->
+  <section class="py-16 sm:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl sm:text-3xl font-bold text-ink-900">Read Before You Decide</h2>
+      <p class="mt-3 max-w-3xl text-ink-700">
+        Plain-language guides to testing and treating New Hampshire well water, with
+        sources you can check.
+      </p>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {topGuides.map((guide) => <GuideCard guide={guide} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 7: FAQ -->
+  <div class="bg-ink-50 border-t border-ink-200">
+    <FAQ items={faqs} />
+  </div>
+
+  <!-- Section 8: Final CTA + form -->
+  <section class="bg-white border-t border-ink-200">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <h2 class="text-2xl sm:text-3xl font-bold text-ink-900">
+        Find Out What Is in Your Well Water
+      </h2>
+      <p class="mt-3 text-ink-700">
+        Testing is the sensible first step. Request a free in-home water test and a
+        written quote from a licensed local contractor. No obligation.
+      </p>
+      <div class="mt-8 rounded-xl border border-ink-200 bg-white p-6 sm:p-8 shadow-sm">
+        <ContactForm source="Homepage" id="home-form" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

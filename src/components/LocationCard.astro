@@ -1,0 +1,27 @@
+---
+import Icon from "./Icon.astro";
+import { site } from "../data/site";
+import type { LocationItem } from "../data/site";
+
+interface Props {
+  location: LocationItem;
+}
+
+const { location } = Astro.props;
+---
+
+<a
+  href={`/locations/${location.slug}`}
+  class="group flex items-center justify-between gap-3 rounded-lg border border-ink-200 bg-white px-5 py-4 shadow-sm transition-shadow hover:shadow-md"
+>
+  <span class="flex items-center gap-3">
+    <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-50 text-brand-700">
+      <Icon name="map-pin" size={20} />
+    </span>
+    <span>
+      <span class="block font-semibold text-ink-900">{location.town}, {site.stateAbbr}</span>
+      <span class="block text-xs text-ink-500">{location.county} County</span>
+    </span>
+  </span>
+  <Icon name="arrow-right" size={18} class="text-brand-700 group-hover:translate-x-0.5 transition-transform" />
+</a>

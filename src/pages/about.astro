@@ -1,0 +1,138 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import Icon from "../components/Icon.astro";
+import { site } from "../data/site";
+
+const title = "About NH Well Water Treatment | A Local Matching Service";
+const description =
+  "NH Well Water Treatment connects New Hampshire well owners with licensed local water treatment contractors. Learn how we work and who operates this site.";
+
+const crumbs = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+];
+
+const criteria = [
+  "Hold any New Hampshire licensing required for the work",
+  "Carry current general liability insurance",
+  "Provide transparent, itemized written estimates",
+  "Offer written workmanship warranties",
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: site.legalEntity,
+    alternateName: "Compass Lead Group",
+    url: site.productionUrl,
+    email: site.contactEmail,
+    description:
+      "Compass Camper LLC is an Oregon-registered marketing and lead generation company. It operates NH Well Water Treatment, a marketing service that connects New Hampshire well owners with licensed local water treatment contractors.",
+    areaServed: { "@type": "State", name: "New Hampshire" },
+  },
+];
+---
+
+<BaseLayout title={title} description={description} schema={schema}>
+  <section class="bg-gradient-to-b from-brand-50 to-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <Breadcrumbs items={crumbs} />
+      <p class="mt-6 text-sm font-semibold uppercase tracking-wide text-brand-700">About</p>
+      <h1 class="mt-3 text-3xl sm:text-4xl font-bold leading-tight text-ink-900">
+        About NH Well Water Treatment
+      </h1>
+      <p class="mt-5 text-lg leading-relaxed text-ink-700">
+        We help New Hampshire well owners take the first step toward cleaner water by
+        connecting them with licensed local contractors. Here is who we are and how the
+        service works.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 sm:py-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <div>
+        <h2 class="text-2xl font-bold text-ink-900">Who we are</h2>
+        <p class="mt-4 text-ink-700 leading-relaxed">
+          NH Well Water Treatment is a marketing service operated by Compass Camper LLC,
+          an Oregon-registered marketing company. We are not a water treatment
+          contractor and we do not perform water treatment work. We help New Hampshire
+          well owners find licensed local contractors who test water and install
+          treatment systems.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-2xl font-bold text-ink-900">Why this exists</h2>
+        <p class="mt-4 text-ink-700 leading-relaxed">
+          New Hampshire bedrock produces naturally occurring arsenic, uranium, and
+          radon, and wells drilled into that fractured bedrock often carry higher
+          levels of these contaminants than shallow wells.
+          <!-- Source: USGS New England WSC, https://www.usgs.gov/centers/new-england-water-science-center/news/new-maps-predict-areas-elevated-radon-uranium-new ; NHDES DWGB-3-11 -->
+          Many well owners do not know what is in their water, and many more do not know
+          which contractor to call once they do. The water-treatment market can be
+          confusing, and the contaminants that matter most in New Hampshire are
+          invisible. We make that first step simple: one request, and a licensed local
+          contractor reaches out to test your water and explain your options.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-2xl font-bold text-ink-900">What we ask of contractors</h2>
+        <p class="mt-4 text-ink-700 leading-relaxed">
+          We connect you with independent, licensed local contractors who meet
+          objective standards:
+        </p>
+        <ul class="mt-6 space-y-3">
+          {
+            criteria.map((item) => (
+              <li class="flex items-start gap-3 text-ink-700">
+                <Icon name="circle-check" size={20} class="mt-0.5 shrink-0 text-brand-700" />
+                <span>{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-2xl font-bold text-ink-900">The company behind this site</h2>
+        <p class="mt-4 text-ink-700 leading-relaxed">
+          This website is operated by Compass Camper LLC, a marketing and lead
+          generation company registered in Oregon and operating as Compass Lead Group.
+          Compass Camper LLC is not a contractor and does not perform water treatment
+          work directly. All testing and treatment is performed by the independent
+          licensed contractor you are matched with. Contractor license numbers are
+          available on request. You can reach us any time at
+          <a href={`mailto:${site.contactEmail}`} class="text-brand-700 underline">{site.contactEmail}</a>.
+          <!-- TODO operator: add the real operating address here before launch, per COMPLIANCE_STANDARDS.md (address requirements). Do not fabricate one. It can be a home-based or commercial address, disclosed on About or Contact. -->
+        </p>
+        <p class="mt-4 text-ink-700 leading-relaxed">
+          We keep this page honest on purpose. You will not find invented team members,
+          stock-photo bios, fake reviews, or claims about years in business. The brand
+          is new, and we would rather earn your trust by being straight with you and by
+          connecting you with contractors who do good work.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-ink-50 border-t border-ink-200">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 text-center">
+      <h2 class="text-2xl sm:text-3xl font-bold text-ink-900">Start with a free water test</h2>
+      <p class="mt-3 text-ink-700">
+        Request a free in-home test and a written quote from a licensed local
+        contractor. No obligation.
+      </p>
+      <a
+        href="/contact"
+        class="mt-8 inline-flex items-center justify-center gap-2 rounded-md bg-accent-500 px-6 py-3.5 text-base font-semibold text-ink-900 hover:bg-accent-600 transition-colors"
+      >
+        <Icon name="circle-check" size={20} />
+        Get a Free Water Test and Quote
+      </a>
+    </div>
+  </section>
+</BaseLayout>

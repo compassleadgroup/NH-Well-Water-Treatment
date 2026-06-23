@@ -1,0 +1,59 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+import { services } from "../data/site";
+
+const title = "Page Not Found | NH Well Water Treatment";
+const description = "The page you are looking for does not exist. Find water treatment services and guides for New Hampshire well owners.";
+
+const popular = [
+  { label: services[0].name, href: `/services/${services[0].slug}` },
+  { label: services[4].name, href: `/services/${services[4].slug}` },
+  { label: "Arsenic in New Hampshire Well Water: A Homeowner's Guide", href: "/guides/arsenic-in-well-water-nh" },
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="py-20 sm:py-28">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-7xl sm:text-8xl font-bold text-brand-700">404</p>
+      <h1 class="mt-4 text-2xl sm:text-3xl font-bold text-ink-900">This page does not exist</h1>
+      <p class="mt-4 text-ink-700">
+        The page you are looking for may have moved or never existed. Here is how to get
+        back on track.
+      </p>
+
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+        <a
+          href="/contact"
+          class="inline-flex items-center justify-center gap-2 rounded-md bg-accent-500 px-6 py-3.5 text-base font-semibold text-ink-900 hover:bg-accent-600 transition-colors"
+        >
+          <Icon name="circle-check" size={20} />
+          Get a Free Water Test and Quote
+        </a>
+        <a
+          href="/"
+          class="inline-flex items-center justify-center gap-2 rounded-md border border-brand-700 px-6 py-3.5 text-base font-semibold text-brand-700 hover:bg-brand-50 transition-colors"
+        >
+          Back to home
+        </a>
+      </div>
+
+      <div class="mt-12 text-left">
+        <h2 class="text-sm font-semibold uppercase tracking-wide text-ink-500">Popular pages</h2>
+        <ul class="mt-4 space-y-2">
+          {
+            popular.map((item) => (
+              <li>
+                <a href={item.href} class="inline-flex items-center gap-2 text-brand-700 hover:underline">
+                  <Icon name="arrow-right" size={16} />
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

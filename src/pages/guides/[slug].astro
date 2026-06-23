@@ -1,0 +1,165 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import Icon from "../../components/Icon.astro";
+import { site, services } from "../../data/site";
+import { guideContent } from "../../data/guideContent";
+
+export function getStaticPaths() {
+  return Object.values(guideContent).map((content) => ({
+    params: { slug: content.slug },
+    props: { content },
+  }));
+}
+
+const { content } = Astro.props;
+
+const crumbs = [
+  { label: "Home", href: "/" },
+  { label: "Guides", href: "/guides" },
+  { label: content.title, href: `/guides/${content.slug}` },
+];
+
+const showToc = content.sections.length >= 4;
+
+const relatedServices = content.relatedServices
+  .map((slug) => services.find((s) => s.slug === slug))
+  .filter((s): s is (typeof services)[number] => Boolean(s));
+
+const relatedGuides = content.relatedGuides
+  .map((slug) => guideContent[slug])
+  .filter(Boolean);
+---
+
+<BaseLayout title={content.metaTitle} description={content.metaDescription} ogType="article">
+  <article>
+    <header class="bg-gradient-to-b from-brand-50 to-white">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <Breadcrumbs items={crumbs} />
+        <p class="mt-6 text-sm font-semibold uppercase tracking-wide text-brand-700">Guide</p>
+        <h1 class="mt-3 text-3xl sm:text-4xl font-bold leading-tight text-ink-900">{content.title}</h1>
+        <p class="mt-4 text-sm text-ink-500">Published by {site.brand}</p>
+      </div>
+    </header>
+
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <div class="space-y-4 text-lg leading-relaxed text-ink-700">
+        {content.intro.map((p) => <p set:html={p} />)}
+      </div>
+
+      {
+        showToc && (
+          <nav class="mt-10 rounded-lg border border-ink-200 bg-ink-50 p-5" aria-label="On this page">
+            <p class="text-sm font-semibold uppercase tracking-wide text-ink-500">On this page</p>
+            <ol class="mt-3 space-y-2">
+              {content.sections.map((s) => (
+                <li>
+                  <a href={`#${s.id}`} class="text-brand-700 hover:underline">{s.heading}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )
+      }
+
+      <div class="mt-10 space-y-12">
+        {
+          content.sections.map((s) => (
+            <section id={s.id} class="scroll-mt-24">
+              <h2 class="text-2xl font-bold text-ink-900">{s.heading}</h2>
+              {s.paras && (
+                <div class="mt-4 space-y-4 text-ink-700 leading-relaxed">
+                  {s.paras.map((p) => <p set:html={p} />)}
+                </div>
+              )}
+              {s.list && (
+                <ul class="mt-4 space-y-2">
+                  {s.list.map((li) => (
+                    <li class="flex items-start gap-3 text-ink-700">
+                      <Icon name="check" size={20} class="mt-0.5 shrink-0 text-brand-700" />
+                      <span set:html={li} />
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          ))
+        }
+      </div>
+
+      <!-- Conclusion + soft CTA -->
+      <section class="mt-12 rounded-xl border border-ink-200 bg-brand-50 p-6 sm:p-8">
+        <h2 class="text-xl font-bold text-ink-900">The first step is a test</h2>
+        <p class="mt-3 text-ink-700">
+          New Hampshire's bedrock contaminants are invisible and treatable, and the only
+          way to know what is in your well is to test it. When you are ready, we can
+          connect you with a licensed local contractor for a free in-home water test and
+          a written, no-obligation quote.
+        </p>
+        <a
+          href="/contact"
+          class="mt-5 inline-flex items-center justify-center gap-2 rounded-md bg-accent-500 px-6 py-3 text-base font-semibold text-ink-900 hover:bg-accent-600 transition-colors"
+        >
+          <Icon name="circle-check" size={20} />
+          Get a Free Water Test and Quote
+        </a>
+      </section>
+
+      <!-- Related services -->
+      <div class="mt-12">
+        <h2 class="text-sm font-semibold uppercase tracking-wide text-ink-500">Related services</h2>
+        <ul class="mt-4 flex flex-wrap gap-2">
+          {
+            relatedServices.map((s) => (
+              <li>
+                <a
+                  href={`/services/${s.slug}`}
+                  class="inline-flex items-center gap-1 rounded-full border border-ink-200 px-4 py-2 text-sm font-medium text-brand-700 hover:bg-brand-50"
+                >
+                  {s.name}
+                  <Icon name="arrow-right" size={14} />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Related guides -->
+      {
+        relatedGuides.length > 0 && (
+          <div class="mt-8">
+            <h2 class="text-sm font-semibold uppercase tracking-wide text-ink-500">Keep reading</h2>
+            <ul class="mt-4 space-y-2">
+              {relatedGuides.map((g) => (
+                <li>
+                  <a
+                    href={`/guides/${g.slug}`}
+                    class="inline-flex items-center gap-2 text-brand-700 hover:underline"
+                  >
+                    <Icon name="book-open" size={16} />
+                    {g.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+
+      <!-- Sources -->
+      <div class="mt-10 border-t border-ink-200 pt-6">
+        <h2 class="text-sm font-semibold uppercase tracking-wide text-ink-500">Sources</h2>
+        <ul class="mt-3 space-y-1 text-sm">
+          {
+            content.sources.map((s) => (
+              <li>
+                <a href={s.href} rel="noopener noreferrer" class="text-brand-700 underline">{s.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

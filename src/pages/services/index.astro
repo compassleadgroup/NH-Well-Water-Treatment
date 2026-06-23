@@ -1,0 +1,68 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import ServiceCard from "../../components/ServiceCard.astro";
+import Icon from "../../components/Icon.astro";
+import { site, services } from "../../data/site";
+
+const title = "Water Treatment Services | NH Well Water Treatment";
+const description =
+  "Arsenic, uranium, radon, iron and manganese, whole-house, and reverse osmosis water treatment from licensed New Hampshire contractors. Free test and quote.";
+
+const crumbs = [
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services" },
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="bg-gradient-to-b from-brand-50 to-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <Breadcrumbs items={crumbs} />
+      <p class="mt-6 text-sm font-semibold uppercase tracking-wide text-brand-700">Services</p>
+      <h1 class="mt-3 text-3xl sm:text-4xl font-bold leading-tight text-ink-900">
+        Well Water Treatment Services in New Hampshire
+      </h1>
+      <p class="mt-5 text-lg leading-relaxed text-ink-700">
+        Each service below is provided by the licensed local contractor you are matched
+        with, sized to your water and your home. The first step is always the same: a
+        free in-home water test that shows what is actually in your well.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 sm:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {services.map((service) => <ServiceCard service={service} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-ink-50 border-y border-ink-200">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 text-center">
+      <h2 class="text-2xl sm:text-3xl font-bold text-ink-900">Not sure which you need?</h2>
+      <p class="mt-3 text-ink-700">
+        Most New Hampshire wells carry more than one contaminant, and a single test
+        shows the full picture. Read the contaminants overview, or just request a free
+        test and let a contractor sort it out.
+      </p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+        <a
+          href="/guides/nh-well-water-contaminants"
+          class="inline-flex items-center justify-center gap-2 rounded-md border border-brand-700 px-6 py-3.5 text-base font-semibold text-brand-700 hover:bg-brand-50 transition-colors"
+        >
+          <Icon name="book-open" size={18} />
+          Read the contaminants overview
+        </a>
+        <a
+          href="/contact"
+          class="inline-flex items-center justify-center gap-2 rounded-md bg-accent-500 px-6 py-3.5 text-base font-semibold text-ink-900 hover:bg-accent-600 transition-colors"
+        >
+          <Icon name="circle-check" size={20} />
+          Get a Free Water Test and Quote
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

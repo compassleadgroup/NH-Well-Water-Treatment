@@ -1,0 +1,75 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import Icon from "../../components/Icon.astro";
+import { site } from "../../data/site";
+import { builtLocations } from "../../data/builtLocations";
+
+const title = "Areas We Serve | NH Well Water Treatment";
+const description =
+  "New Hampshire towns where we connect well owners with licensed local water treatment contractors for a free in-home water test and quote.";
+
+const crumbs = [
+  { label: "Home", href: "/" },
+  { label: "Locations", href: "/locations" },
+];
+
+// Group built towns by county for a clean, thin hub.
+const byCounty = builtLocations.reduce<Record<string, typeof builtLocations>>((acc, loc) => {
+  (acc[loc.county] ||= []).push(loc);
+  return acc;
+}, {});
+const counties = Object.keys(byCounty).sort();
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="bg-gradient-to-b from-brand-50 to-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <Breadcrumbs items={crumbs} />
+      <p class="mt-6 text-sm font-semibold uppercase tracking-wide text-brand-700">Locations</p>
+      <h1 class="mt-3 text-3xl sm:text-4xl font-bold leading-tight text-ink-900">
+        New Hampshire Areas We Serve
+      </h1>
+      <p class="mt-5 text-lg leading-relaxed text-ink-700">
+        We connect well owners across New Hampshire with licensed local water treatment
+        contractors, with a focus on the Lakes Region and the inland Strafford and
+        Seacoast areas. Choose your town, or call us if you do not see it listed.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 sm:py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      {
+        counties.map((county) => (
+          <div>
+            <h2 class="text-sm font-semibold uppercase tracking-wide text-ink-500">
+              {county} County
+            </h2>
+            <ul class="mt-4 grid gap-3 sm:grid-cols-2">
+              {byCounty[county].map((loc) => (
+                <li>
+                  <a
+                    href={`/locations/${loc.slug}`}
+                    class="group flex items-center justify-between gap-3 rounded-lg border border-ink-200 bg-white px-5 py-4 shadow-sm transition-shadow hover:shadow-md"
+                  >
+                    <span class="flex items-center gap-2 font-medium text-ink-900 group-hover:text-brand-700">
+                      <Icon name="map-pin" size={18} class="text-brand-700" />
+                      {loc.town}, {site.stateAbbr}
+                    </span>
+                    <Icon name="arrow-right" size={18} class="text-brand-700" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+
+      <p class="text-ink-700">
+        Do not see your town? <a href="/contact" class="text-brand-700 underline">Call us</a> and we
+        will connect you with a contractor who serves your area.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
