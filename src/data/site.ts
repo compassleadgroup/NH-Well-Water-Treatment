@@ -16,8 +16,8 @@ export const site = {
   contactEmail: "compassleadgroup@gmail.com",
   hours: "Monday to Friday, 9:00 AM to 6:00 PM Eastern",
   launchYear: 2026,
-  // Web3Forms access key. Placeholder until the operator drops in the real key.
-  web3formsKey: "REPLACE_WITH_WEB3FORMS_ACCESS_KEY",
+  // Web3Forms access key (public by design, embedded in the form HTML).
+  web3formsKey: "6987e5b1-8b8b-42af-ac88-86da101e9b60",
 } as const;
 
 // Compliance copy. Do not reword without checking COMPLIANCE_STANDARDS.md.
