@@ -1,0 +1,41 @@
+name: Compliance Check
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  compliance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run compliance greps
+        run: |
+          set -e
+          fail=0
+
+          echo "Checking for em dashes..."
+          if grep -rnP "\x{2014}" src/ 2>/dev/null; then
+            echo "FAIL: em dash found"; fail=1
+          fi
+
+          echo "Checking for forbidden language..."
+          if grep -rinE "vetted|our network|pre-screened|pre-qualified|hand-selected|carefully selected|top-rated|trusted partners" src/ 2>/dev/null; then
+            echo "FAIL: forbidden language found"; fail=1
+          fi
+
+          echo "Checking for first-person work claims..."
+          if grep -rinE "we (test|install|treat|remove|fix|diagnose|repair)\b" src/ 2>/dev/null; then
+            echo "FAIL: first-person work claim found"; fail=1
+          fi
+
+          echo "Checking for forbidden schema types..."
+          if grep -rnE "\"(LocalBusiness|AggregateRating|Review)\"" src/ 2>/dev/null; then
+            echo "FAIL: forbidden schema type found"; fail=1
+          fi
+
+          if [ "$fail" -ne 0 ]; then
+            echo "Compliance check failed."
+            exit 1
+          fi
+          echo "Compliance check passed."

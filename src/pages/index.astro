@@ -1,0 +1,181 @@
+---
+// BATCH 0 shell homepage. Establishes the Bedrock design system and exercises
+// the shared components so the build is validated. BATCH 1 replaces this with
+// the full PROJECT_BRIEF homepage (12 sections, 1,500 to 2,400 words, verified
+// and cited local facts).
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+import ContactForm from "../components/ContactForm.astro";
+import FAQ from "../components/FAQ.astro";
+import Icon from "../components/Icon.astro";
+import { site, services } from "../data/site";
+
+const title = "Well Water Treatment in New Hampshire | NH Well Water Treatment";
+const description =
+  "Connecting New Hampshire well owners with licensed local contractors for arsenic, uranium, and whole-house water treatment. Free in-home water test and quote.";
+
+const trustBar = [
+  "Licensed and insured local contractors",
+  "Free in-home water test",
+  "No-obligation written quotes",
+  "Whole-house and point-of-use systems",
+];
+
+const steps = [
+  {
+    title: "Tell us about your water",
+    body: "Share your concern or request a free test. It takes a couple of minutes.",
+  },
+  {
+    title: "We connect you with a local contractor",
+    body: "You are matched with a licensed local water treatment contractor who serves your area.",
+  },
+  {
+    title: "Get a test and a written quote",
+    body: "The contractor tests your water, explains the results, and gives you a written quote. No obligation.",
+  },
+];
+
+const faqs = [
+  {
+    question: "Do you install water treatment systems?",
+    answer:
+      "No. NH Well Water Treatment is a marketing service operated by Compass Camper LLC. We connect you with a licensed local water treatment contractor who tests your water and installs any system. We do not perform water treatment work ourselves.",
+  },
+  {
+    question: "Is the water test really free?",
+    answer:
+      "Yes. The licensed contractor you are matched with provides a free in-home water test and a written, no-obligation quote.",
+  },
+  {
+    question: "What areas do you serve?",
+    answer:
+      "We serve private-well homeowners across New Hampshire, with a focus on the Lakes Region and the inland Strafford and Seacoast areas. If you do not see your town, call us and we will connect you with a contractor who serves your area.",
+  },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: site.brand,
+    description:
+      "A marketing and lead generation service that connects New Hampshire private-well homeowners with licensed local water treatment contractors.",
+    url: site.productionUrl,
+    areaServed: { "@type": "State", name: "New Hampshire" },
+    telephone: site.phoneTel,
+    email: site.contactEmail,
+    provider: { "@type": "Organization", name: site.legalEntity },
+  },
+];
+---
+
+<BaseLayout title={title} description={description} schema={schema}>
+  <!-- Hero -->
+  <section class="bg-gradient-to-b from-brand-50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <div class="max-w-3xl">
+        <p class="text-sm font-semibold uppercase tracking-wide text-brand-700">
+          New Hampshire well water
+        </p>
+        <h1 class="mt-3 text-3xl sm:text-5xl font-bold leading-tight text-ink-900">
+          New Hampshire Well Water Treatment: Arsenic, Uranium, and Whole-House Filtration
+        </h1>
+        <p class="mt-5 text-lg leading-relaxed text-ink-700">
+          Arsenic and uranium occur naturally in New Hampshire bedrock, and both are
+          odorless and tasteless, so a test is the only way to know what is in your
+          well. We connect New Hampshire well owners with licensed local contractors
+          for a free in-home water test and quote.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a
+            href="/contact"
+            class="inline-flex items-center justify-center gap-2 rounded-md bg-accent-500 px-6 py-3.5 text-base font-semibold text-ink-900 hover:bg-accent-600 transition-colors"
+          >
+            <Icon name="circle-check" size={20} />
+            Get a Free Water Test and Quote
+          </a>
+          <a
+            href={`tel:${site.phoneTel}`}
+            class="inline-flex items-center justify-center gap-2 rounded-md border border-brand-700 px-6 py-3.5 text-base font-semibold text-brand-700 hover:bg-brand-50 transition-colors"
+          >
+            <Icon name="phone" size={18} />
+            Call {site.phoneDisplay}
+          </a>
+        </div>
+      </div>
+
+      <ul class="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          trustBar.map((item) => (
+            <li class="flex items-start gap-2 text-sm text-ink-700">
+              <Icon name="check" size={18} class="mt-0.5 shrink-0 text-brand-700" />
+              {item}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Services grid -->
+  <section class="py-16 sm:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl sm:text-3xl font-bold text-ink-900">
+        Water Treatment Services Available Through Local Contractors
+      </h2>
+      <p class="mt-3 max-w-3xl text-ink-700">
+        Each service below is provided by the licensed local contractor you are
+        matched with, sized to your water and your home.
+      </p>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {services.map((service) => <ServiceCard service={service} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="bg-brand-900 text-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <h2 class="text-2xl sm:text-3xl font-bold">How It Works</h2>
+      <div class="mt-10 grid gap-8 sm:grid-cols-3">
+        {
+          steps.map((step, i) => (
+            <div>
+              <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent-500 font-bold text-ink-900">
+                {i + 1}
+              </span>
+              <h3 class="mt-4 text-lg font-semibold">{step.title}</h3>
+              <p class="mt-2 text-brand-100 leading-relaxed">{step.body}</p>
+            </div>
+          ))
+        }
+      </div>
+      <a
+        href="/how-it-works"
+        class="mt-8 inline-flex items-center gap-1 font-semibold text-accent-400 hover:text-accent-300"
+      >
+        See how matching works
+        <Icon name="arrow-right" size={16} />
+      </a>
+    </div>
+  </section>
+
+  <FAQ items={faqs} />
+
+  <!-- Final CTA + form -->
+  <section class="bg-ink-50 border-t border-ink-200">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <h2 class="text-2xl sm:text-3xl font-bold text-ink-900">
+        Find Out What Is in Your Well Water
+      </h2>
+      <p class="mt-3 text-ink-700">
+        Testing is the sensible first step. Request a free in-home water test and a
+        written quote from a licensed local contractor. No obligation.
+      </p>
+      <div class="mt-8 rounded-xl border border-ink-200 bg-white p-6 sm:p-8 shadow-sm">
+        <ContactForm source="Homepage" id="home-form" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

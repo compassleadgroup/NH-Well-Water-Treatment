@@ -1,0 +1,164 @@
+---
+import Icon from "./Icon.astro";
+import {
+  site,
+  locations,
+  tcpaConsent,
+  formSharingDisclosure,
+} from "../data/site";
+
+interface Props {
+  // Tags the lead with the page it came from. Shows up in the Web3Forms email.
+  source?: string;
+  // Optional id so multiple forms on one page keep unique field ids.
+  id?: string;
+}
+
+const { source = "Contact page", id = "lead-form" } = Astro.props;
+const redirectUrl = new URL("/thank-you", site.productionUrl).href;
+
+const concerns = [
+  "Arsenic",
+  "Uranium",
+  "Radon in water",
+  "Iron, manganese, or staining",
+  "Hard water",
+  "Not sure, I want a full test",
+  "Other",
+];
+---
+
+<form
+  action="https://api.web3forms.com/submit"
+  method="POST"
+  class="space-y-5"
+>
+  <!-- Web3Forms config. Operator replaces the access key before launch. -->
+  <input type="hidden" name="access_key" value={site.web3formsKey} />
+  <input type="hidden" name="subject" value="New water test request from NH Well Water Treatment" />
+  <input type="hidden" name="from_name" value={site.brand} />
+  <input type="hidden" name="source" value={source} />
+  <input type="hidden" name="redirect" value={redirectUrl} />
+  <!-- Honeypot spam trap (Web3Forms convention). Hidden from real users. -->
+  <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
+
+  <div class="grid gap-5 sm:grid-cols-2">
+    <div class="sm:col-span-2">
+      <label for={`${id}-name`} class="block text-sm font-medium text-ink-800">Full Name</label>
+      <input
+        id={`${id}-name`}
+        name="name"
+        type="text"
+        required
+        autocomplete="name"
+        class="mt-1 w-full rounded-md border border-ink-300 px-3 py-2.5 text-ink-900 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/30"
+      />
+    </div>
+
+    <div>
+      <label for={`${id}-phone`} class="block text-sm font-medium text-ink-800">Phone</label>
+      <input
+        id={`${id}-phone`}
+        name="phone"
+        type="tel"
+        required
+        autocomplete="tel"
+        class="mt-1 w-full rounded-md border border-ink-300 px-3 py-2.5 text-ink-900 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/30"
+      />
+    </div>
+
+    <div>
+      <label for={`${id}-email`} class="block text-sm font-medium text-ink-800">Email</label>
+      <input
+        id={`${id}-email`}
+        name="email"
+        type="email"
+        required
+        autocomplete="email"
+        class="mt-1 w-full rounded-md border border-ink-300 px-3 py-2.5 text-ink-900 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/30"
+      />
+    </div>
+
+    <div class="sm:col-span-2">
+      <label for={`${id}-address`} class="block text-sm font-medium text-ink-800">
+        Property Address <span class="text-ink-500 font-normal">(optional)</span>
+      </label>
+      <input
+        id={`${id}-address`}
+        name="property_address"
+        type="text"
+        autocomplete="street-address"
+        class="mt-1 w-full rounded-md border border-ink-300 px-3 py-2.5 text-ink-900 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/30"
+      />
+    </div>
+
+    <div>
+      <label for={`${id}-town`} class="block text-sm font-medium text-ink-800">Town</label>
+      <select
+        id={`${id}-town`}
+        name="town"
+        class="mt-1 w-full rounded-md border border-ink-300 bg-white px-3 py-2.5 text-ink-900 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/30"
+      >
+        <option value="">Select your town</option>
+        {locations.map((l) => <option value={l.town}>{l.town}</option>)}
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div>
+      <label for={`${id}-concern`} class="block text-sm font-medium text-ink-800">Main water concern</label>
+      <select
+        id={`${id}-concern`}
+        name="water_concern"
+        class="mt-1 w-full rounded-md border border-ink-300 bg-white px-3 py-2.5 text-ink-900 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/30"
+      >
+        <option value="">Select a concern</option>
+        {concerns.map((c) => <option value={c}>{c}</option>)}
+      </select>
+    </div>
+
+    <div class="sm:col-span-2">
+      <label for={`${id}-details`} class="block text-sm font-medium text-ink-800">
+        Additional details <span class="text-ink-500 font-normal">(optional)</span>
+      </label>
+      <textarea
+        id={`${id}-details`}
+        name="details"
+        rows="4"
+        class="mt-1 w-full rounded-md border border-ink-300 px-3 py-2.5 text-ink-900 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/30"
+      ></textarea>
+    </div>
+  </div>
+
+  <!-- Sharing disclosure, sits directly above the consent block -->
+  <p class="rounded-md bg-ink-100 px-4 py-3 text-sm text-ink-700">
+    {formSharingDisclosure}
+  </p>
+
+  <!--
+    TCPA consent. Not pre-checked, not in a popup, above the submit button.
+    TODO: integrate TrustedForm or Jornaya LeadiD to capture a consent token
+    here before any paid traffic. Organic traffic only until then.
+  -->
+  <div class="flex items-start gap-3">
+    <input
+      id={`${id}-consent`}
+      name="tcpa_consent"
+      type="checkbox"
+      required
+      value="I consent"
+      class="mt-1 h-5 w-5 shrink-0 rounded border-ink-400 text-brand-700 focus:ring-brand-600"
+    />
+    <label for={`${id}-consent`} class="text-xs leading-relaxed text-ink-600">
+      {tcpaConsent} <a href="/privacy" class="text-brand-700 underline">See our Privacy Policy.</a>
+    </label>
+  </div>
+
+  <button
+    type="submit"
+    class="inline-flex w-full items-center justify-center gap-2 rounded-md bg-accent-500 px-6 py-3.5 text-base font-semibold text-ink-900 hover:bg-accent-600 transition-colors sm:w-auto"
+  >
+    <Icon name="circle-check" size={20} />
+    Get My Free Water Test and Quote
+  </button>
+</form>
