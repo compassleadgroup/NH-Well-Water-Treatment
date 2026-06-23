@@ -1,0 +1,107 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { site } from "../data/site";
+
+const title = "Terms of Service | NH Well Water Treatment";
+const description =
+  "The terms governing your use of NH Well Water Treatment, a marketing service operated by Compass Camper LLC.";
+
+const crumbs = [
+  { label: "Home", href: "/" },
+  { label: "Terms of Service", href: "/terms" },
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="bg-gradient-to-b from-brand-50 to-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <Breadcrumbs items={crumbs} />
+      <h1 class="mt-6 text-3xl sm:text-4xl font-bold leading-tight text-ink-900">Terms of Service</h1>
+      <p class="mt-3 text-sm text-ink-500">Last updated: {site.launchYear}</p>
+    </div>
+  </section>
+
+  <section class="py-12 sm:py-16">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-ink-700 leading-relaxed">
+      <div>
+        <h2 class="text-xl font-bold text-ink-900">About these terms</h2>
+        <p class="mt-3">
+          This website, NH Well Water Treatment, is operated by Compass Camper LLC, a
+          marketing and lead generation company registered in Oregon and operating as
+          Compass Lead Group. By using this site or submitting a request, you agree to
+          these terms.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-bold text-ink-900">Our service</h2>
+        <p class="mt-3">
+          NH Well Water Treatment is a marketing and lead generation service. We connect
+          New Hampshire well owners with independent, licensed local water treatment
+          contractors. We are not a contractor. We do not test water, install systems,
+          or perform any water treatment work, and we are not a party to any agreement
+          you enter into with a contractor.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-bold text-ink-900">Contractor work is between you and the contractor</h2>
+        <p class="mt-3">
+          When we connect you with a contractor, you deal and contract directly with
+          that contractor for any testing, products, or work. Any quote, agreement,
+          schedule, warranty, or payment is strictly between you and the contractor. You
+          are responsible for confirming a contractor's licensing, insurance, and
+          suitability for your needs before any work begins.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-bold text-ink-900">No warranty on contractor work</h2>
+        <p class="mt-3">
+          We do not warrant or guarantee the work, products, advice, pricing, or conduct
+          of any contractor. We make no representations about the results of any water
+          test or treatment system. This site and this service are provided on an as-is
+          and as-available basis, without warranties of any kind, to the fullest extent
+          permitted by law.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-bold text-ink-900">Limitation of liability</h2>
+        <p class="mt-3">
+          To the fullest extent permitted by law, Compass Camper LLC is not liable for
+          any indirect, incidental, or consequential damages arising from your use of
+          this site or from any work performed by a contractor. Where liability cannot
+          be excluded, it is limited to a nominal amount.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-bold text-ink-900">Governing law and disputes</h2>
+        <p class="mt-3">
+          These terms are governed by the laws of the State of Oregon, without regard to
+          its conflict-of-laws rules. Any dispute relating to this site or our service
+          will be resolved in the state or federal courts located in Oregon, unless the
+          parties agree to resolve it through arbitration.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-bold text-ink-900">Changes to these terms</h2>
+        <p class="mt-3">
+          We may update these terms from time to time. When we do, we will revise the
+          date at the top of this page.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-bold text-ink-900">Contact us</h2>
+        <p class="mt-3">
+          Questions about these terms? Email us at
+          <a href={`mailto:${site.contactEmail}`} class="text-brand-700 underline">{site.contactEmail}</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
