@@ -6,7 +6,8 @@ import GuideCard from "../components/GuideCard.astro";
 import ContactForm from "../components/ContactForm.astro";
 import FAQ from "../components/FAQ.astro";
 import Icon from "../components/Icon.astro";
-import { site, services, locations, guides } from "../data/site";
+import { site, services, guides } from "../data/site";
+import { builtLocations } from "../data/builtLocations";
 
 const title = "New Hampshire Well Water Treatment | Arsenic & Uranium";
 const description =
@@ -330,7 +331,7 @@ const topGuides = guides.slice(0, 3);
         serve.
       </p>
       <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {locations.map((location) => <LocationCard location={location} />)}
+        {builtLocations.map((location) => <LocationCard location={location} />)}
       </div>
       <p class="mt-6 text-ink-700">
         Do not see your town? <a href="/contact" class="text-brand-700 underline">Call us</a> and we

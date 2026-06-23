@@ -6,6 +6,7 @@ import FAQ from "../../components/FAQ.astro";
 import Icon from "../../components/Icon.astro";
 import { site, services, locations } from "../../data/site";
 import { serviceContent } from "../../data/serviceContent";
+import { isLocationBuilt } from "../../data/builtLocations";
 
 export function getStaticPaths() {
   return services.map((service) => ({
@@ -52,8 +53,11 @@ const relatedServices = content.related.services
   .filter((s): s is (typeof services)[number] => Boolean(s));
 
 const relatedLocations = content.related.locations
-  .map((slug) => locations.find((l) => l.slug === slug))
-  .filter((l): l is (typeof locations)[number] => Boolean(l));
+  .map((slug) => {
+    const loc = locations.find((l) => l.slug === slug);
+    return loc ? { ...loc, built: isLocationBuilt(loc.slug) } : null;
+  })
+  .filter((l): l is NonNullable<typeof l> => Boolean(l));
 
 const canonical = new URL(`/services/${service.slug}`, site.productionUrl).href;
 
@@ -190,17 +194,26 @@ const schema = [
       <p class="mt-6 text-ink-700">Serving well owners in these and other New Hampshire towns:</p>
       <ul class="mt-4 flex flex-wrap gap-2">
         {
-          relatedLocations.map((l) => (
-            <li>
-              <a
-                href={`/locations/${l.slug}`}
-                class="inline-flex items-center gap-1 rounded-full border border-ink-200 px-4 py-2 text-sm font-medium text-ink-700 hover:bg-ink-100"
-              >
-                <Icon name="map-pin" size={14} class="text-brand-700" />
-                {l.town}, {site.stateAbbr}
-              </a>
-            </li>
-          ))
+          relatedLocations.map((l) =>
+            l.built ? (
+              <li>
+                <a
+                  href={`/locations/${l.slug}`}
+                  class="inline-flex items-center gap-1 rounded-full border border-ink-200 px-4 py-2 text-sm font-medium text-ink-700 hover:bg-ink-100"
+                >
+                  <Icon name="map-pin" size={14} class="text-brand-700" />
+                  {l.town}, {site.stateAbbr}
+                </a>
+              </li>
+            ) : (
+              <li>
+                <span class="inline-flex items-center gap-1 rounded-full border border-ink-200 px-4 py-2 text-sm font-medium text-ink-500">
+                  <Icon name="map-pin" size={14} />
+                  {l.town}, {site.stateAbbr}
+                </span>
+              </li>
+            )
+          )
         }
       </ul>
 

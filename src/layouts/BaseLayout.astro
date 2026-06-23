@@ -6,10 +6,10 @@ import {
   headerDisclosure,
   footerDisclaimer,
   services,
-  locations,
   guides,
   navLinks,
 } from "../data/site";
+import { builtLocations } from "../data/builtLocations";
 
 interface Props {
   title: string;
@@ -186,7 +186,7 @@ const year = new Date().getFullYear();
             <h2 class="text-sm font-semibold uppercase tracking-wide text-white">Locations</h2>
             <ul class="mt-3 space-y-2">
               {
-                locations.map((l) => (
+                builtLocations.map((l) => (
                   <li>
                     <a href={`/locations/${l.slug}`} class="text-sm text-ink-300 hover:text-white">
                       {l.town}, {site.stateAbbr}
