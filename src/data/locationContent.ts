@@ -300,4 +300,256 @@ export const locationContent: Record<string, LocationContent> = {
     nearby: ["rochester-nh", "barrington-nh", "farmington-nh"],
     sources: [census("dovercitynewhampshire", "Dover"), USGS_FS051, NHDES_PRIVATE_WELLS],
   },
+
+  "alton-nh": {
+    slug: "alton-nh",
+    town: "Alton",
+    county: "Belknap",
+    metaTitle: "Well Water Treatment in Alton, New Hampshire",
+    metaDescription:
+      "Well water treatment for Alton, New Hampshire well owners near Alton Bay. Free in-home water test and quote from a licensed contractor. No obligation.",
+    heroSub:
+      "Alton wraps the southeastern tip of Lake Winnipesaukee, and most homes here run on private bedrock wells. A licensed local contractor can test your well and recommend the right system. Start with a free in-home water test and quote.",
+    whyParas: [
+      // Census: Alton pop 5,894 (2020); ~92% owner-occupied; features Alton Bay, Mount Major
+      "Alton wraps the southeastern tip of Lake Winnipesaukee, with the resort village of Alton Bay at its center and Mount Major rising above the shoreline. About 5,900 people live here year round, more than nine in ten of them homeowners, spread across rural lots and lakefront property.",
+      // NHDES 46% private wells; USGS bedrock
+      "Most Alton homes draw from private wells in the granite and metamorphic bedrock of the Lakes Region. Statewide, about 46 percent of New Hampshire residents rely on private wells, and that bedrock is a natural source of arsenic along with uranium and radon.",
+      // USGS uranium/radon probability
+      "USGS mapping shows elevated radon and uranium probability across much of this part of New Hampshire, and arsenic is tied to bedrock rather than to town lines. Because all three are invisible in water, a test is the only way to know an Alton well's levels.",
+    ],
+    features: ["Lake Winnipesaukee", "Alton Bay", "Mount Major", "Merrymeeting Lake", "Merrymeeting River"],
+    coContaminants: [
+      "Alton wells usually pair arsenic with uranium and radon from the bedrock, plus the iron and manganese that stain fixtures and laundry across New Hampshire. Where several contaminants show up, a contractor designs a whole-house system that treats them in the right order.",
+    ],
+    faqs: [
+      {
+        question: "Do most Alton homes use well water?",
+        answer:
+          "Yes. Outside the village, most Alton homes draw from private bedrock wells, which are not tested by any agency. A test is the only way to know what is in a given well.",
+      },
+      {
+        question: "Are radon and uranium a concern in Alton?",
+        answer:
+          "USGS mapping shows elevated radon and uranium probability across much of this part of New Hampshire, and both come from the same bedrock as arsenic. A radiological test that includes radon and uranium is the way to know your levels.",
+      },
+      {
+        question: "How do I get an Alton well tested?",
+        answer:
+          "Use a New Hampshire accredited laboratory or request a free in-home test from the licensed local contractor we connect you with. NHDES recommends a standard analysis every three to five years.",
+      },
+    ],
+    nearby: ["gilford-nh", "wolfeboro-nh", "barrington-nh", "belmont-nh"],
+    sources: [census("altontownbelknapcountynewhampshire", "Alton"), USGS_URANIUM_RADON, NHDES_PRIVATE_WELLS],
+  },
+
+  "belmont-nh": {
+    slug: "belmont-nh",
+    town: "Belmont",
+    county: "Belknap",
+    metaTitle: "Well Water Treatment in Belmont, New Hampshire",
+    metaDescription:
+      "Well water treatment for Belmont, New Hampshire well owners. Free in-home water test and quote from a licensed contractor. No obligation.",
+    heroSub:
+      "Belmont sits just south of Laconia with frontage on Lake Winnisquam, and many homes here rely on private bedrock wells. A licensed local contractor can test your well and recommend the right system. Start with a free in-home water test and quote.",
+    whyParas: [
+      // Census: Belmont pop 7,314 (2020); features Lake Winnisquam, Silver Lake, Tioga River
+      "Belmont is a working Lakes Region town of about 7,300 people just south of Laconia, with frontage on Lake Winnisquam and the Tioga River running through it toward Silver Lake. It mixes a compact village center with rural roads where homes sit on their own wells.",
+      // NHDES 46%; USGS bedrock
+      "Those wells draw from the same granite and metamorphic bedrock that underlies the rest of the Lakes Region, a natural source of arsenic, uranium, and radon. About 46 percent of New Hampshire residents rely on private wells, none of which are tested for them by any agency.",
+      // USGS probability
+      "USGS arsenic mapping ties the metal to specific bedrock units rather than to any town boundary, so a Belmont well can carry arsenic regardless of the address. Testing is the only way to know, since arsenic is odorless and tasteless.",
+    ],
+    features: ["Lake Winnisquam", "Silver Lake", "Tioga River", "Belmont Village", "Sargent Lake"],
+    coContaminants: [
+      "Belmont wells commonly carry arsenic together with uranium and radon from the bedrock, and iron and manganese are widespread and leave rust and dark staining. A standard test checks for all of these so a contractor can match one system to the full picture.",
+    ],
+    faqs: [
+      {
+        question: "What contaminants are common in Belmont well water?",
+        answer:
+          "Arsenic, uranium, and radon from the granite and metamorphic bedrock are the main concerns, often alongside iron and manganese that cause staining. A standard analysis checks for all of these.",
+      },
+      {
+        question: "Is Belmont well water tested by the town?",
+        answer:
+          "No. Private wells are not tested or regulated by any agency, so testing is the homeowner's responsibility. You can use an accredited laboratory or a free in-home test from the contractor we connect you with.",
+      },
+      {
+        question: "How often should a Belmont well be tested?",
+        answer:
+          "NHDES recommends a standard analysis every three to five years, with bacteria and nitrate yearly, and a radiological test for radon and uranium every three to five years.",
+      },
+    ],
+    nearby: ["laconia-nh", "tilton-nh", "gilford-nh"],
+    sources: [census("belmonttownbelknapcountynewhampshire", "Belmont"), USGS_PROBABILITY, NHDES_PRIVATE_WELLS],
+  },
+
+  "tilton-nh": {
+    slug: "tilton-nh",
+    town: "Tilton",
+    county: "Belknap",
+    metaTitle: "Well Water Treatment in Tilton, New Hampshire",
+    metaDescription:
+      "Well water treatment for Tilton, New Hampshire well owners, the gateway to the Lakes Region. Free in-home water test and quote from a licensed contractor.",
+    heroSub:
+      "Tilton is the commercial gateway to the Lakes Region, and beyond the village many homes run on private bedrock wells. A licensed local contractor can test your well and recommend the right system. Start with a free in-home water test and quote.",
+    whyParas: [
+      // Census: Tilton pop 3,962 (2020); features Winnipesaukee River, Tanger Outlets
+      "Tilton is a small Belknap County town of about 3,960 people on the Winnipesaukee River, best known as a commercial gateway to the Lakes Region with the Tanger Outlets and a historic village shared with neighboring Northfield. Beyond the built-up center, homes sit on rural lots with their own wells.",
+      // NHDES 46%; USGS bedrock
+      "Tilton wells draw from the granite and metamorphic bedrock of central New Hampshire, which naturally releases arsenic, uranium, and radon. Private wells make up a large share of New Hampshire's water supply and are not tested by any agency.",
+      // USGS probability
+      "Because USGS mapping ties arsenic to bedrock units rather than to town lines, a Tilton well can carry it whether or not the well next door does. A test is the only way to know, and all three of these bedrock contaminants are treatable once measured.",
+    ],
+    features: ["Winnipesaukee River", "Tanger Outlets Tilton", "Tilton Island Park", "Lake Winnisquam", "Tilton-Northfield village"],
+    coContaminants: [
+      "In Tilton, arsenic typically comes with uranium and radon from the bedrock, plus the iron and manganese that are common across New Hampshire groundwater. A contractor reads the full test and, where more than one contaminant is present, recommends a whole-house system.",
+    ],
+    faqs: [
+      {
+        question: "Do Tilton homes outside the village use wells?",
+        answer:
+          "Many do. The village center is more built up, but rural Tilton homes commonly draw from private bedrock wells, which are not tested by any agency. A test is the way to know what is in the water.",
+      },
+      {
+        question: "What is in Tilton well water?",
+        answer:
+          "The main concerns are arsenic, uranium, and radon from the granite and metamorphic bedrock, often with iron and manganese that cause staining. A standard analysis checks for these together.",
+      },
+      {
+        question: "How do I get a Tilton well tested?",
+        answer:
+          "Use a New Hampshire accredited laboratory or request a free in-home test from the licensed local contractor we connect you with. NHDES recommends a standard analysis every three to five years.",
+      },
+    ],
+    nearby: ["belmont-nh", "laconia-nh", "meredith-nh"],
+    sources: [census("tiltontownbelknapcountynewhampshire", "Tilton"), USGS_PROBABILITY, NHDES_PRIVATE_WELLS],
+  },
+
+  "barrington-nh": {
+    slug: "barrington-nh",
+    town: "Barrington",
+    county: "Strafford",
+    metaTitle: "Well Water Treatment in Barrington, New Hampshire",
+    metaDescription:
+      "Well water treatment for Barrington, New Hampshire, in the Strafford arsenic belt. Free in-home water test and quote from a licensed contractor.",
+    heroSub:
+      "Barrington is a heavily well-dependent town in the Strafford County arsenic belt, dotted with lakes and ponds. A licensed local contractor can test your well and recommend the right system. Start with a free in-home water test and quote.",
+    whyParas: [
+      // Census: Barrington pop 9,326 (2020); 90.4% owner-occupied; many ponds, Swains Lake, Mendums Pond
+      "Barrington is a rural, residential Strafford County town of about 9,300 people, around nine in ten of them homeowners, with more than a dozen ponds and lakes including Swains Lake, Ayers Lake, and Mendums Pond. It is one of the more heavily well-dependent towns in the Seacoast region, with most homes on private bedrock wells.",
+      // USGS FS-051-03: 21% of Hillsborough/Strafford wells > 10 ug/L
+      "Barrington sits in the southeastern New Hampshire arsenic belt. A USGS study of private bedrock wells in the region found that about 21 percent of wells in Hillsborough and Strafford counties exceeded the federal arsenic limit of 10 micrograms per liter, a higher rate than the state as a whole.",
+      // NH 5 ppb standard; NHDES private wells
+      "With New Hampshire's enforceable arsenic standard set at 5 parts per billion, half the federal limit, and no agency testing private wells, a Barrington well owner has good reason to test. Uranium and radon from the same bedrock are worth checking at the same time.",
+    ],
+    features: ["Swains Lake", "Ayers Lake", "Mendums Pond", "Nippo Lake", "Stonehouse Pond"],
+    coContaminants: [
+      "In Barrington, arsenic is the headline contaminant, often arriving with iron and manganese that stain fixtures, plus uranium and radon from the same bedrock. Because arsenic rates here run above the statewide average, a contractor looks closely at the arsenic result and whether the species present calls for a pre-oxidation step.",
+    ],
+    faqs: [
+      {
+        question: "Is arsenic common in Barrington wells?",
+        answer:
+          "A USGS study found that about 21 percent of private bedrock wells in Hillsborough and Strafford counties exceeded the federal arsenic limit of 10 micrograms per liter, a higher rate than the state as a whole. That is why a test matters in Barrington.",
+      },
+      {
+        question: "Is Barrington mostly on private wells?",
+        answer:
+          "Yes. Barrington is a rural, well-dependent town where most homes draw from private bedrock wells. Those wells are not tested by any agency, so testing is the homeowner's responsibility.",
+      },
+      {
+        question: "How do I get a Barrington well tested?",
+        answer:
+          "Use a New Hampshire accredited laboratory or request a free in-home test from the licensed local contractor we connect you with. Given the local arsenic rates, following NHDES guidance to test on a regular schedule is worthwhile.",
+      },
+    ],
+    nearby: ["rochester-nh", "dover-nh", "farmington-nh"],
+    sources: [census("barringtontownstraffordcountynewhampshire", "Barrington"), USGS_FS051, NHDES_PRIVATE_WELLS],
+  },
+
+  "rochester-nh": {
+    slug: "rochester-nh",
+    town: "Rochester",
+    county: "Strafford",
+    metaTitle: "Well Water Treatment in Rochester, New Hampshire",
+    metaDescription:
+      "Well water treatment for Rochester, New Hampshire homes in the Strafford arsenic belt. Free in-home water test and quote from a licensed contractor.",
+    heroSub:
+      "Rochester is one of the larger Strafford County cities, and its outlying homes sit in the southeastern New Hampshire arsenic belt. A licensed local contractor can test your well and recommend the right system. Start with a free in-home water test and quote.",
+    whyParas: [
+      // Census: Rochester pop 32,492 (2020); ~65% owner-occupied; 6th largest NH city; Cocheco/Salmon Falls rivers, Gonic, East Rochester
+      "Rochester is the sixth-largest city in New Hampshire, with about 32,500 residents along the Cocheco and Salmon Falls rivers in Strafford County. Its older neighborhoods, including the Gonic and East Rochester villages, are largely on public water, while many homes in the outlying and rural areas draw from private bedrock wells.",
+      // USGS FS-051-03 arsenic belt
+      "Those rural wells sit in the southeastern New Hampshire arsenic belt. A USGS study of private bedrock wells in the region found that about 21 percent of wells in Hillsborough and Strafford counties exceeded the federal arsenic limit of 10 micrograms per liter, a higher rate than the state overall.",
+      // NH 5 ppb; NHDES
+      "New Hampshire's enforceable arsenic standard is 5 parts per billion, half the federal limit, and private wells are not tested by any agency. For a Rochester-area well owner, that combination makes testing the clear first step.",
+    ],
+    features: ["Cocheco River", "Salmon Falls River", "Gonic", "East Rochester", "Downtown Rochester"],
+    coContaminants: [
+      "Around Rochester, arsenic leads, frequently accompanied by iron and manganese that cause staining and by uranium and radon from the bedrock. A contractor pays particular attention to the arsenic result, since rates here run above the statewide average, and to whether the arsenic species calls for a pre-oxidation step.",
+    ],
+    faqs: [
+      {
+        question: "My Rochester home is on city water. Does this apply?",
+        answer:
+          "This service is for homes on private wells. Much of Rochester is on public water, but outlying and rural homes often have private wells. If your home draws from a well, a test is the way to know your arsenic level.",
+      },
+      {
+        question: "Is arsenic a real concern near Rochester?",
+        answer:
+          "Yes. A USGS study found that about 21 percent of private bedrock wells in Hillsborough and Strafford counties exceeded the federal arsenic limit of 10 micrograms per liter, a higher rate than the state as a whole.",
+      },
+      {
+        question: "How do I get a Rochester well tested?",
+        answer:
+          "Use a New Hampshire accredited laboratory or request a free in-home test from the licensed local contractor we connect you with. NHDES recommends a standard analysis every three to five years.",
+      },
+    ],
+    nearby: ["dover-nh", "farmington-nh", "barrington-nh"],
+    sources: [census("rochestercitynewhampshire", "Rochester"), USGS_FS051, NHDES_PRIVATE_WELLS],
+  },
+
+  "farmington-nh": {
+    slug: "farmington-nh",
+    town: "Farmington",
+    county: "Strafford",
+    metaTitle: "Well Water Treatment in Farmington, New Hampshire",
+    metaDescription:
+      "Well water treatment for Farmington, New Hampshire well owners in the Strafford arsenic belt. Free in-home water test and quote from a licensed contractor.",
+    heroSub:
+      "Farmington is a rural Strafford County town where most homes run on private bedrock wells in the arsenic belt. A licensed local contractor can test your well and recommend the right system. Start with a free in-home water test and quote.",
+    whyParas: [
+      // Census: Farmington pop 6,722 (2020); 62.7% owner-occupied; Cocheco/Ela/Mad rivers
+      "Farmington is a rural Strafford County town of about 6,700 people in the valley of the Cocheco River, with the Ela and Mad rivers also running through it. A little under two-thirds of its occupied homes are owner-occupied, and outside the village center most households rely on private bedrock wells.",
+      // USGS FS-051-03 arsenic belt
+      "Farmington sits in the southeastern New Hampshire arsenic belt. A USGS study of private bedrock wells in the region found that about 21 percent of wells in Hillsborough and Strafford counties exceeded the federal arsenic limit of 10 micrograms per liter, a higher rate than the state as a whole.",
+      // NH 5 ppb; NHDES
+      "Because New Hampshire's standard is a strict 5 parts per billion and no agency tests private wells, a Farmington well owner finds out what is in the water only by testing. Uranium and radon from the same bedrock are worth checking at the same time.",
+    ],
+    features: ["Cocheco River", "Mad River", "Ela River", "Downtown Farmington", "Blue Job Mountain"],
+    coContaminants: [
+      "In Farmington, arsenic is the main concern, usually with iron and manganese that stain fixtures and with uranium and radon from the bedrock. Since arsenic rates here run above the statewide average, a contractor looks carefully at the arsenic level and species before recommending a system.",
+    ],
+    faqs: [
+      {
+        question: "Are Farmington homes mostly on wells?",
+        answer:
+          "Outside the village center, most Farmington homes draw from private bedrock wells, which are not tested by any agency. A test is the only way to know what is in a given well.",
+      },
+      {
+        question: "Is arsenic common around Farmington?",
+        answer:
+          "A USGS study found that about 21 percent of private bedrock wells in Hillsborough and Strafford counties exceeded the federal arsenic limit of 10 micrograms per liter, a higher rate than the state as a whole. That is why testing matters here.",
+      },
+      {
+        question: "How do I get a Farmington well tested?",
+        answer:
+          "Use a New Hampshire accredited laboratory or request a free in-home test from the licensed local contractor we connect you with. NHDES recommends a standard analysis every three to five years.",
+      },
+    ],
+    nearby: ["rochester-nh", "barrington-nh", "alton-nh"],
+    sources: [census("farmingtontownstraffordcountynewhampshire", "Farmington"), USGS_FS051, NHDES_PRIVATE_WELLS],
+  },
 };
