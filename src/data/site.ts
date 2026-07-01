@@ -88,6 +88,22 @@ export const services: ServiceItem[] = [
   },
 ];
 
+// Well Water Testing is the top-of-funnel front door (added June 2026 for the
+// testing-demand retarget). It is a standalone page, not one of the six dynamic
+// service routes, so it stays out of the `services` array and is surfaced
+// through serviceNavLinks for the footer and the /services overview.
+export const testingService: ServiceItem = {
+  name: "Well Water Testing",
+  slug: "well-water-testing",
+  short:
+    "The first step for any New Hampshire well. A licensed local contractor provides a free in-home water test, or you can use a state-accredited laboratory.",
+  icon: "test-tube",
+};
+
+// Testing first, then the six treatment services. Used by the footer services
+// column and the /services overview grid.
+export const serviceNavLinks: ServiceItem[] = [testingService, ...services];
+
 export interface LocationItem {
   town: string;
   county: string;
@@ -154,6 +170,7 @@ export const guides: GuideItem[] = [
 
 // Primary navigation used by the header.
 export const navLinks = [
+  { label: "Testing", href: "/services/well-water-testing" },
   { label: "Services", href: "/services" },
   { label: "Locations", href: "/locations" },
   { label: "Guides", href: "/guides" },

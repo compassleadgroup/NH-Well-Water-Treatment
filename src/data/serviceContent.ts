@@ -18,10 +18,18 @@ export interface ServiceSource {
   href: string;
 }
 
+export interface ServiceExtraSection {
+  id: string;
+  heading: string;
+  paras: string[];
+}
+
 export interface ServiceContent {
   slug: string;
   metaTitle: string;
   metaDescription: string;
+  // Optional H1 override. Defaults to `${service.name} in New Hampshire`.
+  h1?: string;
   heroSub: string;
   intro: string[];
   methodsHeading: string;
@@ -29,6 +37,9 @@ export interface ServiceContent {
   costHeading: string;
   cost: string[];
   followUp?: string;
+  // Optional extra sections rendered after the cost section (for example the
+  // Arsenic-III versus Arsenic-V section on the arsenic page).
+  extraSections?: ServiceExtraSection[];
   related: {
     services: string[];
     locations: string[];
@@ -70,13 +81,19 @@ const EPA_RADIONUCLIDES = {
   label: "EPA, Natural Radionuclides in Private Wells",
   href: "https://www.epa.gov/radtown/natural-radionuclides-private-wells",
 };
+const USGS_URAN_RADON = {
+  label:
+    "USGS, Arsenic, Iron, Lead, Manganese, and Uranium in Private Bedrock Wells in Southeastern New Hampshire (FS-2014-3042)",
+  href: "https://pubs.usgs.gov/fs/2014/3042/",
+};
 
 export const serviceContent: Record<string, ServiceContent> = {
   "arsenic-treatment": {
     slug: "arsenic-treatment",
-    metaTitle: "Arsenic Treatment in NH | NH Well Water Treatment",
+    metaTitle: "Arsenic in Well Water Treatment in New Hampshire",
     metaDescription:
-      "Arsenic treatment for New Hampshire well water, from adsorptive media to anion exchange and reverse osmosis. Free in-home water test and quote.",
+      "How New Hampshire well owners remove arsenic from well water. Treatment by arsenic type, typical cost, and a free in-home water test.",
+    h1: "Arsenic in Well Water Treatment in New Hampshire",
     heroSub:
       "Arsenic is naturally present in New Hampshire bedrock and is odorless and tasteless. A licensed local contractor can test your well and recommend the right system. Start with a free in-home water test and quote.",
     intro: [
@@ -104,15 +121,28 @@ export const serviceContent: Record<string, ServiceContent> = {
         body: "Arsenic shows up as Arsenic-III or Arsenic-V. Arsenic-III carries no electrical charge, so anion exchange and membranes remove it less effectively. A contractor may add a simple pre-oxidation step, using chlorine or a manganese dioxide media, to convert Arsenic-III to the more easily removed Arsenic-V before the main treatment.",
       },
     ],
-    costHeading: "What arsenic treatment costs in New Hampshire",
+    costHeading: "How much arsenic removal costs",
     cost: [
-      "NHDES guidance puts a typical whole-house arsenic system, whether adsorptive media or anion exchange followed by a calcite neutralizer, at roughly $1,500 to $3,000 to install, with the main ongoing cost being a replacement filter every one to three years. A point-of-use reverse osmosis system that treats only the kitchen tap costs less.",
-      "Your real number depends on your arsenic level, the arsenic species, your pH, and whether other contaminants are present, which is exactly what the free in-home test and written quote sort out. These figures are 2026 New Hampshire market context drawn from NHDES guidance, not a quote.",
+      // Source: NHDES survey figures via DWGB-3-2 (median POU install $1,200 with $343/yr maintenance; whole-house $3,000 with $550/yr; POU RO $1,200 to $2,000; whole-house single filtration $1,500 to $3,000). https://www.des.nh.gov/sites/g/files/ehbemt341/files/documents/2020-01/dwgb-3-2.pdf
+      "It depends on your water, but New Hampshire has solid benchmarks. As 2026 New Hampshire market context, an NHDES survey found a median installed cost of about $1,200 for a point-of-use system, with median annual maintenance around $343, and about $3,000 for a whole-house system, with median annual maintenance around $550. A point-of-use reverse osmosis unit for arsenic commonly runs $1,200 to $2,000 installed, and a whole-house single-filtration system generally falls between $1,500 and $3,000.",
+      "Your exact number depends on your arsenic level and species, your water chemistry and pH, and whether you treat one tap or the whole home. That is what the free in-home test and written, itemized quote pin down, so you are working from a price for your well rather than a general range.",
     ],
     followUp:
       "For arsenic, NHDES recommends retesting the treated water quarterly for the first year and twice a year after that, so you can confirm the system is doing its job.",
+    extraSections: [
+      {
+        id: "arsenic-iii-vs-v",
+        heading: "Arsenic-III versus Arsenic-V and why it changes the system",
+        // Source: NHDES DWGB-3-2 (species behavior; RO removes ~95% As-V vs ~60% As-III; pre-oxidation converts As-III to As-V).
+        paras: [
+          "Arsenic shows up in well water as one of two species, Arsenic-III (arsenite) or Arsenic-V (arsenate), and the difference is not academic. It changes which system works and whether an extra step is needed.",
+          "Arsenic-V carries a negative charge in water, so it is removed efficiently by anion exchange and by reverse osmosis membranes. Arsenic-III carries essentially no charge, so those same methods remove it far less effectively. NHDES notes that reverse osmosis removes roughly 95 percent of Arsenic-V but only about 60 percent of Arsenic-III.",
+          "The fix is a pre-oxidation step. A contractor can convert Arsenic-III to the more easily removed Arsenic-V using chlorine or a manganese dioxide media before the main treatment, which is why the arsenic species is one of the first things a good contractor checks when sizing a system.",
+        ],
+      },
+    ],
     related: {
-      services: ["uranium-treatment", "whole-house-water-treatment", "reverse-osmosis-systems"],
+      services: ["uranium-treatment", "radon-in-water-treatment", "reverse-osmosis-systems"],
       locations: ["laconia-nh", "dover-nh", "barrington-nh"],
       guide: {
         label: "New Hampshire Arsenic in Well Water: A Homeowner's Guide",
@@ -121,34 +151,32 @@ export const serviceContent: Record<string, ServiceContent> = {
     },
     faqs: [
       {
-        question: "How does arsenic get into New Hampshire well water?",
+        // Source: NHDES survey cost figures (DWGB-3-2), median POU $1,200 / whole-house $3,000.
+        question: "How much does it cost to remove arsenic from well water?",
         answer:
-          "It occurs naturally. Arsenic dissolves out of the granite and metamorphic bedrock that underlies much of New Hampshire, so it shows up in bedrock wells without any nearby pollution source.",
+          "Cost depends on the arsenic type and level and whether you treat the whole house or only drinking water. As 2026 New Hampshire context, an NHDES survey found a median installed cost of about $1,200 for a point-of-use system and about $3,000 for a whole-house system. A free in-home test gives you an exact quote.",
       },
       {
-        question: "What is New Hampshire's arsenic standard?",
+        question: "What is the best way to remove arsenic from well water?",
         answer:
-          "New Hampshire lowered its enforceable arsenic standard to 5 parts per billion in 2021, half the federal limit of 10 parts per billion. Testing is the only way to know where your well falls.",
+          "The right method depends on the arsenic species and concentration. Common approaches are adsorptive media, anion exchange, and reverse osmosis. A licensed contractor tests your water and sizes the system.",
       },
       {
-        question: "Should I treat the whole house or just the kitchen tap?",
+        // Source: NHDES 5 ppb (2021); EPA federal MCL 10 ppb.
+        question: "What is a safe level of arsenic in drinking water?",
         answer:
-          "It depends on your level and whether other contaminants are present. Because arsenic is not absorbed through the skin, a point-of-use system at the kitchen tap is often enough, while higher levels or other contaminants may call for a whole-house system. The contractor recommends the right approach after testing.",
+          "New Hampshire's maximum contaminant level is 5 parts per billion, set in 2021 and half the federal limit, and the federal EPA maximum contaminant level is 10 parts per billion. Because arsenic is a long-term exposure issue, lower is better, and a test is the only way to know your level.",
       },
       {
-        question: "Does an arsenic system need maintenance?",
+        question: "Do I need a whole-house arsenic system or a point-of-use filter?",
         answer:
-          "Yes. Adsorptive media is replaced every one to three years, and reverse osmosis membranes and cartridges are changed on a schedule. The contractor explains the maintenance plan in the written quote.",
+          "A point-of-use system treats water at a single tap, usually the kitchen, for drinking and cooking. A whole-house system treats all water entering the home. Which one fits depends on your test results and how you use your water, and the matched contractor advises based on the test.",
       },
       {
+        // Source: NHDES DWGB-3-2 (species behavior; RO ~95% As-V vs ~60% As-III).
         question: "What is the difference between Arsenic-III and Arsenic-V?",
         answer:
-          "They are two forms of arsenic. Arsenic-III has no electrical charge and is harder to remove, so a contractor may add a pre-oxidation step to convert it to Arsenic-V, which anion exchange and reverse osmosis remove more effectively.",
-      },
-      {
-        question: "How soon should I retest after treatment?",
-        answer:
-          "NHDES recommends retesting treated water for arsenic quarterly during the first year and twice a year after that.",
+          "Arsenic-III (arsenite) and Arsenic-V (arsenate) respond differently to treatment. Arsenic-V carries a charge and is removed well by anion exchange and reverse osmosis, while Arsenic-III carries little charge and is harder to remove, so a contractor often adds an oxidation step to convert it to Arsenic-V first.",
       },
     ],
     sources: [NHDES_ARSENIC, USGS_FS, NHDES_ARSENIC_STD],
@@ -156,9 +184,10 @@ export const serviceContent: Record<string, ServiceContent> = {
 
   "uranium-treatment": {
     slug: "uranium-treatment",
-    metaTitle: "Uranium Treatment in NH | NH Well Water Treatment",
+    metaTitle: "Uranium in Well Water Treatment in New Hampshire",
     metaDescription:
-      "Uranium treatment for New Hampshire well water using anion exchange or reverse osmosis. Free in-home water test and quote from a licensed local contractor.",
+      "Uranium occurs naturally in New Hampshire bedrock wells. Treatment options and a free in-home water test from a licensed local contractor.",
+    h1: "Uranium in Well Water Treatment in New Hampshire",
     heroSub:
       "Uranium occurs naturally in New Hampshire bedrock and often travels with arsenic and radon. A licensed local contractor can test your well and recommend the right system. Start with a free in-home water test and quote.",
     intro: [
@@ -206,9 +235,21 @@ export const serviceContent: Record<string, ServiceContent> = {
           "At elevated levels, uranium in drinking water is a concern mainly for kidney health. It is a long-term exposure issue, not an emergency, and it is treatable once a test shows your level.",
       },
       {
-        question: "How does a contractor remove uranium?",
+        // Source: uranium is part of the NHDES radiological test (DWGB-2-1).
+        question: "How do I test for uranium in well water?",
         answer:
-          "The most common methods are anion exchange, which captures uranium on a resin bed, and reverse osmosis at the kitchen tap. Activated alumina is another option depending on your water chemistry.",
+          "Uranium is included in a radiological water test, which a licensed local contractor can collect during a free in-home visit or you can order from a state-accredited laboratory. NHDES recommends a radiological test for radon and uranium every three to five years.",
+      },
+      {
+        question: "How is uranium removed from well water?",
+        answer:
+          "The most common methods are anion exchange, which captures uranium on a resin bed, and reverse osmosis at the kitchen tap. Activated alumina is another option depending on your water chemistry. A licensed contractor sizes the system to your level and household.",
+      },
+      {
+        // Source: USGS FS-2014-3042 measured arsenic and uranium together in SE NH bedrock wells; radon is a uranium decay product.
+        question: "Does uranium occur with arsenic and radon in New Hampshire wells?",
+        answer:
+          "Yes. Uranium, radon, and arsenic all come from the same New Hampshire granite and metamorphic bedrock and frequently occur together. USGS sampling of private bedrock wells in southeastern New Hampshire measured arsenic and uranium together, and radon is itself a decay product of uranium.",
       },
       {
         question: "Should I treat the whole house or just the tap for uranium?",
@@ -216,24 +257,20 @@ export const serviceContent: Record<string, ServiceContent> = {
           "Because the main concern is drinking water, a point-of-use reverse osmosis system is often enough, while a whole-house anion exchange system makes sense when uranium is high or other contaminants are present. The contractor recommends the right approach after testing.",
       },
       {
-        question: "Does uranium often come with arsenic or radon?",
-        answer:
-          "Yes. Uranium, radon, and arsenic all come from the same New Hampshire bedrock and frequently occur together, which is why a contractor may suggest a radiological test and a system that addresses more than one contaminant.",
-      },
-      {
         question: "What happens to the system's spent media?",
         answer:
           "Media that captures uranium concentrates radioactivity over time and can become a regulated waste. A licensed contractor handles replacement and disposal properly so it does not accumulate in your home.",
       },
     ],
-    sources: [EPA_TREATMENT, EPA_RADIONUCLIDES, NHDES_RADIONUCLIDES],
+    sources: [EPA_TREATMENT, EPA_RADIONUCLIDES, NHDES_RADIONUCLIDES, USGS_URAN_RADON],
   },
 
   "radon-in-water-treatment": {
     slug: "radon-in-water-treatment",
-    metaTitle: "Radon in Water Treatment in NH | NH Well Water Treatment",
+    metaTitle: "Radon in Well Water Treatment in New Hampshire",
     metaDescription:
-      "Radon in water treatment for New Hampshire wells, by aeration or activated carbon. Free in-home water test and quote from a licensed local contractor.",
+      "Waterborne radon in New Hampshire wells, how it differs from air radon, treatment by aeration or carbon, and a free in-home water test.",
+    h1: "Radon in Well Water Treatment in New Hampshire",
     heroSub:
       "Radon in water is distinct from radon in air and comes from the same New Hampshire bedrock. A licensed local contractor can test your well and recommend the right system. Start with a free in-home water test and quote.",
     intro: [
@@ -276,19 +313,25 @@ export const serviceContent: Record<string, ServiceContent> = {
     },
     faqs: [
       {
-        question: "Is radon in water the same as radon in air?",
+        // Source: radon is part of the NHDES radiological test (DWGB-2-1, DWGB-3-11).
+        question: "How do I test well water for radon?",
         answer:
-          "No, but they are connected. Radon in water is the radon dissolved in your well water, and some of it escapes into indoor air when you use water. Radon in air is the larger health concern, and treating the water reduces the part that comes from your well.",
+          "Waterborne radon is measured by a radiological water test, which a licensed local contractor can collect during a free in-home visit or you can order from a state-accredited laboratory. NHDES recommends testing for radon every three to five years, and it is worth testing your indoor air for radon at the same time.",
+      },
+      {
+        question: "What is the difference between radon in water and radon in air?",
+        answer:
+          "Radon in water is the radon dissolved in your well water, and some of it escapes into indoor air when you use water. Radon in air is the larger health concern, and treating the water reduces the part that comes from your well.",
+      },
+      {
+        question: "How is waterborne radon treated?",
+        answer:
+          "NHDES considers whole-house aeration the preferred treatment, especially at higher levels, because it removes radon without concentrating radioactivity indoors. Granular activated carbon can work at lower levels when placement and disposal are handled correctly.",
       },
       {
         question: "At what level does NHDES recommend treating radon in water?",
         answer:
           "NHDES recommends treating the water when radon is at or above 10,000 picocuries per liter. Between 2,000 and 10,000 picocuries per liter, treatment may be advisable when indoor air radon is also elevated.",
-      },
-      {
-        question: "Is aeration or carbon better for radon?",
-        answer:
-          "NHDES considers whole-house aeration the preferred treatment, especially at higher levels, because it removes radon without concentrating radioactivity indoors. Granular activated carbon can work at lower levels when placement and disposal are handled correctly.",
       },
       {
         question: "Does a carbon filter for radon need special handling?",
