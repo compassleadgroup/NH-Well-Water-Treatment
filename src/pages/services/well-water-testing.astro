@@ -1,0 +1,310 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import ContactForm from "../../components/ContactForm.astro";
+import FAQ from "../../components/FAQ.astro";
+import Icon from "../../components/Icon.astro";
+import { site } from "../../data/site";
+
+const title = "NH Well Water Testing | Free In-Home Water Test";
+const description =
+  "Get your New Hampshire well water tested for arsenic, uranium, radon and more. Free in-home water test from a licensed local contractor.";
+
+const crumbs = [
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: "Well Water Testing", href: "/services/well-water-testing" },
+];
+
+// What NHDES recommends testing for, linked to the relevant page. The panel is
+// the NHDES standard analysis plus the radiological test.
+// Source: NHDES DWGB-2-1, https://www.des.nh.gov/sites/g/files/ehbemt341/files/documents/2020-01/dwgb-2-1.pdf
+const panel = [
+  { name: "Arsenic", note: "The top concern on New Hampshire bedrock wells", href: "/services/arsenic-treatment" },
+  { name: "Uranium", note: "A naturally occurring radioactive metal from bedrock", href: "/services/uranium-treatment" },
+  { name: "Radon", note: "A radioactive gas that also escapes into indoor air", href: "/services/radon-in-water-treatment" },
+  { name: "Iron and manganese", note: "Staining, metallic taste, and buildup", href: "/services/iron-manganese-treatment" },
+  { name: "Hardness", note: "Scale and reduced appliance life", href: "/services/whole-house-water-treatment" },
+  { name: "Nitrate and bacteria", note: "Signs of surface influence or contamination", href: "/guides/nh-well-water-contaminants" },
+];
+
+const steps = [
+  {
+    title: "Tell us about your water",
+    body: "Share your concern or just request a free test. It takes a couple of minutes.",
+  },
+  {
+    title: "We connect you with a local contractor",
+    body: "You are matched with a licensed local contractor who works in your part of New Hampshire.",
+  },
+  {
+    title: "Get your test and a written quote",
+    body: "The contractor runs a free in-home water test, explains the results, and gives you a written quote only if treatment is worthwhile. No obligation.",
+  },
+];
+
+const faqs = [
+  {
+    // Source: NH DHHS Water Analysis Laboratory program (fee-for-service, full report + interpretation),
+    // https://www.dhhs.nh.gov/programs-services/environmental-health-and-you/water-analysis-laboratory-program
+    // NHDES NHELAP accredited labs, https://www.des.nh.gov/water/drinking-water/new-hampshire-environmental-laboratory-accreditation-program
+    question: "How do I get my well water tested in New Hampshire?",
+    answer:
+      "There are two paths. You can send a sample to a state-accredited laboratory for a mail-in panel, including the New Hampshire Public Health Laboratories, which test private-well samples on a fee-for-service basis and return a full report with an interpretation. Or a licensed local contractor can come to your home and run a free in-home water test.",
+  },
+  {
+    // Source: NHDES DWGB-2-1 standard analysis panel + radiological test.
+    question: "What should I test my well water for in New Hampshire?",
+    answer:
+      "NHDES recommends a standard analysis that includes arsenic, bacteria, nitrate and nitrite, chloride, copper, fluoride, hardness, iron, lead, manganese, pH, and sodium, plus a radiological test for radon and uranium. On New Hampshire bedrock wells, arsenic, uranium, and radon deserve particular attention.",
+  },
+  {
+    // Source: NH Public Health Laboratories arsenic fee about $15; NH accredited lab homeowner panels about $180 to $315.
+    // NH DHHS WAL, https://www.dhhs.nh.gov/programs-services/environmental-health-and-you/water-analysis-laboratory-program
+    question: "How much does well water testing cost?",
+    answer:
+      "A state-accredited mail-in panel has a lab fee that varies by the contaminants included. As 2026 New Hampshire context, single-analyte arsenic testing at the New Hampshire Public Health Laboratories is about $15, while a comprehensive homeowner panel from a New Hampshire accredited laboratory generally runs from roughly $180 to $315. The in-home test through the licensed contractor you are matched with is free and carries no obligation.",
+  },
+  {
+    // Source: NHDES DWGB-2-1 frequency guidance.
+    question: "How often should I test my private well?",
+    answer:
+      "NHDES recommends testing for bacteria and nitrate every year, and a standard analysis that includes arsenic and the metals every three to five years, along with a radiological test for radon and uranium every three to five years.",
+  },
+  {
+    question: "Is the in-home water test really free?",
+    answer:
+      "Yes. The licensed local contractor you are matched with provides the in-home test at no cost and no obligation.",
+  },
+];
+
+const sources = [
+  { label: "NHDES, Private Wells", href: "https://www.des.nh.gov/water/drinking-water/private-wells" },
+  {
+    label: "New Hampshire DHHS, Water Analysis Laboratory Program",
+    href: "https://www.dhhs.nh.gov/programs-services/environmental-health-and-you/water-analysis-laboratory-program",
+  },
+  {
+    label: "NHDES, New Hampshire Environmental Laboratory Accreditation Program",
+    href: "https://www.des.nh.gov/water/drinking-water/new-hampshire-environmental-laboratory-accreditation-program",
+  },
+  {
+    label: "NHDES, Suggested Water Quality Testing for Private Wells (DWGB-2-1)",
+    href: "https://www.des.nh.gov/sites/g/files/ehbemt341/files/documents/2020-01/dwgb-2-1.pdf",
+  },
+];
+
+const canonical = new URL("/services/well-water-testing", site.productionUrl).href;
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Well Water Testing in New Hampshire",
+    serviceType: "Water testing contractor referral service",
+    description:
+      "Connecting New Hampshire homeowners with licensed local contractors for well water testing, including a free in-home water test.",
+    areaServed: { "@type": "State", name: "New Hampshire" },
+    provider: { "@type": "Organization", name: site.legalEntity },
+    url: canonical,
+  },
+];
+---
+
+<BaseLayout title={title} description={description} schema={schema}>
+  <!-- Hero -->
+  <section class="bg-gradient-to-b from-brand-50 to-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <Breadcrumbs items={crumbs} />
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-brand-700 text-white">
+          <Icon name="test-tube" size={24} />
+        </span>
+        <p class="text-sm font-semibold uppercase tracking-wide text-brand-700">Services</p>
+      </div>
+      <h1 class="mt-4 text-3xl sm:text-4xl font-bold leading-tight text-ink-900">
+        Well Water Testing in New Hampshire
+      </h1>
+      <p class="mt-5 text-lg leading-relaxed text-ink-700">
+        Arsenic, uranium, and radon occur naturally in New Hampshire bedrock, and all
+        three are odorless and tasteless, so a water test is the only way to know what
+        is in your well. A licensed local contractor can run a free in-home water test,
+        or you can use a state-accredited laboratory.
+      </p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a
+          href="/contact"
+          class="inline-flex items-center justify-center gap-2 rounded-md bg-accent-500 px-6 py-3.5 text-base font-semibold text-ink-900 hover:bg-accent-600 transition-colors"
+        >
+          <Icon name="circle-check" size={20} />
+          Get a Free In-Home Water Test
+        </a>
+        <a
+          href={`tel:${site.phoneTel}`}
+          class="inline-flex items-center justify-center gap-2 rounded-md border border-brand-700 px-6 py-3.5 text-base font-semibold text-brand-700 hover:bg-brand-50 transition-colors"
+        >
+          <Icon name="phone" size={18} />
+          Call {site.phoneDisplay}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- How to test -->
+    <section class="py-12 sm:py-16">
+      <h2 class="text-2xl sm:text-3xl font-bold text-ink-900">
+        How to test your well water in New Hampshire
+      </h2>
+      <p class="mt-4 text-ink-700 leading-relaxed">
+        There are two practical paths, and they suit different situations. Many New
+        Hampshire well owners start with a broad panel to get the full picture, then
+        act on whatever the results show.
+      </p>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2">
+        <div class="rounded-lg border border-ink-200 bg-white p-6 shadow-sm">
+          <h3 class="flex items-center gap-2 text-lg font-semibold text-ink-900">
+            <Icon name="flask-conical" size={20} class="text-brand-700" />
+            A state-accredited laboratory
+          </h3>
+          <p class="mt-3 text-ink-700 leading-relaxed">
+            Send a sample to a state-accredited laboratory for a mail-in panel. The New
+            Hampshire Public Health Laboratories test private-well samples on a
+            fee-for-service basis and return a full report with an interpretation of the
+            results, and NHDES accredits private laboratories through its Environmental
+            Laboratory Accreditation Program. NHDES recommends using an accredited lab.
+            <!-- Source: NH DHHS Water Analysis Laboratory Program, https://www.dhhs.nh.gov/programs-services/environmental-health-and-you/water-analysis-laboratory-program ; NHDES NHELAP, https://www.des.nh.gov/water/drinking-water/new-hampshire-environmental-laboratory-accreditation-program -->
+          </p>
+        </div>
+        <div class="rounded-lg border border-ink-200 bg-white p-6 shadow-sm">
+          <h3 class="flex items-center gap-2 text-lg font-semibold text-ink-900">
+            <Icon name="home" size={20} class="text-brand-700" />
+            A free in-home test
+          </h3>
+          <p class="mt-3 text-ink-700 leading-relaxed">
+            Have a licensed local contractor run a free in-home water test. The
+            contractor you are matched with collects the sample, explains what the
+            results mean in plain language, and provides a written quote only if
+            treatment is worthwhile. There is no cost and no obligation.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- What to test for -->
+    <section class="py-12 sm:py-16 border-t border-ink-200">
+      <h2 class="text-2xl sm:text-3xl font-bold text-ink-900">
+        What to test for in New Hampshire wells
+      </h2>
+      <p class="mt-4 text-ink-700 leading-relaxed">
+        NHDES recommends a standard analysis for private wells that covers arsenic,
+        bacteria, nitrate and nitrite, chloride, copper, fluoride, hardness, iron, lead,
+        manganese, pH, and sodium, plus a radiological test for radon and uranium. On
+        New Hampshire bedrock wells, the contaminants that matter most are the ones that
+        come from the granite: arsenic, uranium, and radon.
+        <!-- Source: NHDES DWGB-2-1, https://www.des.nh.gov/sites/g/files/ehbemt341/files/documents/2020-01/dwgb-2-1.pdf -->
+      </p>
+      <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+        {
+          panel.map((p) => (
+            <li>
+              <a
+                href={p.href}
+                class="group flex items-start gap-3 rounded-lg border border-ink-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
+              >
+                <Icon name="droplet" size={18} class="mt-0.5 shrink-0 text-brand-700" />
+                <span>
+                  <span class="block font-semibold text-ink-900 group-hover:text-brand-700">{p.name}</span>
+                  <span class="mt-0.5 block text-sm text-ink-600">{p.note}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <!-- Results and next steps -->
+    <section class="py-12 sm:py-16 border-t border-ink-200">
+      <h2 class="text-2xl sm:text-3xl font-bold text-ink-900">
+        What your results mean and next steps
+      </h2>
+      <div class="mt-4 space-y-4 text-ink-700 leading-relaxed">
+        <p>
+          A test is only useful if you act on it. If a result comes back above the
+          recommended level, a licensed local contractor can recommend and install
+          treatment sized to your water. New Hampshire's enforceable arsenic standard is
+          5 parts per billion, half the federal limit, so an arsenic result between 5
+          and 10 is already worth addressing.
+          <!-- Source: NHDES arsenic standard 5 ppb (2021), https://www.des.nh.gov/news-and-media/blog/more-protective-arsenic-standard-will-reduce-risk-many -->
+        </p>
+        <p>
+          From there, the path depends on your results: a
+          <a href="/services/arsenic-treatment" class="text-brand-700 underline">system for arsenic</a>,
+          treatment for
+          <a href="/services/uranium-treatment" class="text-brand-700 underline">uranium</a> or
+          <a href="/services/radon-in-water-treatment" class="text-brand-700 underline">radon</a>, or a
+          <a href="/services/whole-house-water-treatment" class="text-brand-700 underline">whole-house system</a>
+          when several contaminants are present. If you are testing because you are
+          buying or selling a home, see our guide to
+          <a href="/guides/well-water-testing-home-sale-nh" class="text-brand-700 underline">well water testing before a home sale</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- How matching works -->
+    <section class="py-12 sm:py-16 border-t border-ink-200">
+      <h2 class="text-2xl sm:text-3xl font-bold text-ink-900">How matching works</h2>
+      <ol class="mt-8 space-y-6">
+        {
+          steps.map((step, i) => (
+            <li class="flex gap-4">
+              <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-700 font-bold text-white">
+                {i + 1}
+              </span>
+              <div>
+                <h3 class="font-semibold text-ink-900">{step.title}</h3>
+                <p class="mt-1 text-ink-700 leading-relaxed">{step.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+  </div>
+
+  <!-- FAQ -->
+  <div class="bg-ink-50 border-t border-ink-200">
+    <FAQ items={faqs} />
+  </div>
+
+  <!-- Sources -->
+  <section class="py-10">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-sm font-semibold uppercase tracking-wide text-ink-500">Sources</h2>
+      <ul class="mt-3 space-y-1 text-sm">
+        {
+          sources.map((s) => (
+            <li>
+              <a href={s.href} rel="noopener noreferrer" class="text-brand-700 underline">{s.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Final CTA + form -->
+  <section class="bg-white border-t border-ink-200">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <h2 class="text-2xl sm:text-3xl font-bold text-ink-900">Start with a free in-home water test</h2>
+      <p class="mt-3 text-ink-700">
+        A licensed local contractor will test your water, explain the results, and give
+        you a written quote. No obligation.
+      </p>
+      <div class="mt-8 rounded-xl border border-ink-200 bg-white p-6 sm:p-8 shadow-sm">
+        <ContactForm source="Service: Well Water Testing" id="svc-well-water-testing" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

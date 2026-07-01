@@ -182,12 +182,12 @@ export const guideContent: Record<string, GuideContent> = {
   "well-water-testing-home-sale-nh": {
     slug: "well-water-testing-home-sale-nh",
     title: "Well Water Testing Before Buying or Selling a Home in New Hampshire",
-    metaTitle: "NH Well Water Testing for a Home Sale",
+    metaTitle: "Well Water Testing for a NH Home Sale",
     metaDescription:
       "What buyers and sellers should test for, what New Hampshire disclosure law requires, who pays, and how treatment fits a home sale. A sourced guide.",
     intro: [
       "A private well is one of the few parts of a New Hampshire home that no public agency monitors, so a home sale is often the moment its water finally gets tested. Whether you are buying or selling, knowing what is in the water protects everyone and prevents surprises at the closing table.",
-      "This guide covers what New Hampshire law requires, what to test for, when to test, who usually pays, and how treatment fits into a sale.",
+      "This guide covers what New Hampshire law requires, what to test for, when to test, who usually pays, and how treatment fits into a sale. For the testing process itself, from choosing a state-accredited laboratory to the free in-home option, see our <a href=\"/services/well-water-testing\" rel=\"noopener\" class=\"text-brand-700 underline\">well water testing page</a>.",
     ],
     sections: [
       {

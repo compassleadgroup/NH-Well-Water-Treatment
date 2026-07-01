@@ -3,7 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import ServiceCard from "../../components/ServiceCard.astro";
 import Icon from "../../components/Icon.astro";
-import { site, services } from "../../data/site";
+import { serviceNavLinks } from "../../data/site";
 
 const title = "Water Treatment Services | NH Well Water Treatment";
 const description =
@@ -34,7 +34,7 @@ const crumbs = [
   <section class="py-16 sm:py-20">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {services.map((service) => <ServiceCard service={service} />)}
+        {serviceNavLinks.map((service) => <ServiceCard service={service} />)}
       </div>
     </div>
   </section>

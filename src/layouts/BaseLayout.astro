@@ -5,7 +5,7 @@ import {
   site,
   headerDisclosure,
   footerDisclaimer,
-  services,
+  serviceNavLinks,
   guides,
   navLinks,
 } from "../data/site";
@@ -171,7 +171,7 @@ const year = new Date().getFullYear();
             <h2 class="text-sm font-semibold uppercase tracking-wide text-white">Services</h2>
             <ul class="mt-3 space-y-2">
               {
-                services.map((s) => (
+                serviceNavLinks.map((s) => (
                   <li>
                     <a href={`/services/${s.slug}`} class="text-sm text-ink-300 hover:text-white">
                       {s.name}
