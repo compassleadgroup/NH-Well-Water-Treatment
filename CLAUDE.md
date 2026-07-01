@@ -19,6 +19,10 @@ If any check fails, STOP. Do not edit anything. Output: "Tripwire failed: [which
 
 If all three pass, output: "Tripwire passed: NH Well Water Treatment, Bedrock design system, correct repo." Then continue.
 
+Before adding, replacing, or wiring any image or visual asset, read the
+"Image and Visual Asset Standards" section of COMPLIANCE_STANDARDS.md and
+apply it without exception.
+
 ---
 
 ## SITE VARIABLES
