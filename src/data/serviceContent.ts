@@ -81,6 +81,11 @@ const EPA_RADIONUCLIDES = {
   label: "EPA, Natural Radionuclides in Private Wells",
   href: "https://www.epa.gov/radtown/natural-radionuclides-private-wells",
 };
+const USGS_URAN_RADON = {
+  label:
+    "USGS, Arsenic, Iron, Lead, Manganese, and Uranium in Private Bedrock Wells in Southeastern New Hampshire (FS-2014-3042)",
+  href: "https://pubs.usgs.gov/fs/2014/3042/",
+};
 
 export const serviceContent: Record<string, ServiceContent> = {
   "arsenic-treatment": {
@@ -137,7 +142,7 @@ export const serviceContent: Record<string, ServiceContent> = {
       },
     ],
     related: {
-      services: ["uranium-treatment", "whole-house-water-treatment", "reverse-osmosis-systems"],
+      services: ["uranium-treatment", "radon-in-water-treatment", "reverse-osmosis-systems"],
       locations: ["laconia-nh", "dover-nh", "barrington-nh"],
       guide: {
         label: "New Hampshire Arsenic in Well Water: A Homeowner's Guide",
@@ -179,9 +184,10 @@ export const serviceContent: Record<string, ServiceContent> = {
 
   "uranium-treatment": {
     slug: "uranium-treatment",
-    metaTitle: "Uranium Treatment in NH | NH Well Water Treatment",
+    metaTitle: "Uranium in Well Water Treatment in New Hampshire",
     metaDescription:
-      "Uranium treatment for New Hampshire well water using anion exchange or reverse osmosis. Free in-home water test and quote from a licensed local contractor.",
+      "Uranium occurs naturally in New Hampshire bedrock wells. Treatment options and a free in-home water test from a licensed local contractor.",
+    h1: "Uranium in Well Water Treatment in New Hampshire",
     heroSub:
       "Uranium occurs naturally in New Hampshire bedrock and often travels with arsenic and radon. A licensed local contractor can test your well and recommend the right system. Start with a free in-home water test and quote.",
     intro: [
@@ -229,9 +235,21 @@ export const serviceContent: Record<string, ServiceContent> = {
           "At elevated levels, uranium in drinking water is a concern mainly for kidney health. It is a long-term exposure issue, not an emergency, and it is treatable once a test shows your level.",
       },
       {
-        question: "How does a contractor remove uranium?",
+        // Source: uranium is part of the NHDES radiological test (DWGB-2-1).
+        question: "How do I test for uranium in well water?",
         answer:
-          "The most common methods are anion exchange, which captures uranium on a resin bed, and reverse osmosis at the kitchen tap. Activated alumina is another option depending on your water chemistry.",
+          "Uranium is included in a radiological water test, which a licensed local contractor can collect during a free in-home visit or you can order from a state-accredited laboratory. NHDES recommends a radiological test for radon and uranium every three to five years.",
+      },
+      {
+        question: "How is uranium removed from well water?",
+        answer:
+          "The most common methods are anion exchange, which captures uranium on a resin bed, and reverse osmosis at the kitchen tap. Activated alumina is another option depending on your water chemistry. A licensed contractor sizes the system to your level and household.",
+      },
+      {
+        // Source: USGS FS-2014-3042 measured arsenic and uranium together in SE NH bedrock wells; radon is a uranium decay product.
+        question: "Does uranium occur with arsenic and radon in New Hampshire wells?",
+        answer:
+          "Yes. Uranium, radon, and arsenic all come from the same New Hampshire granite and metamorphic bedrock and frequently occur together. USGS sampling of private bedrock wells in southeastern New Hampshire measured arsenic and uranium together, and radon is itself a decay product of uranium.",
       },
       {
         question: "Should I treat the whole house or just the tap for uranium?",
@@ -239,24 +257,20 @@ export const serviceContent: Record<string, ServiceContent> = {
           "Because the main concern is drinking water, a point-of-use reverse osmosis system is often enough, while a whole-house anion exchange system makes sense when uranium is high or other contaminants are present. The contractor recommends the right approach after testing.",
       },
       {
-        question: "Does uranium often come with arsenic or radon?",
-        answer:
-          "Yes. Uranium, radon, and arsenic all come from the same New Hampshire bedrock and frequently occur together, which is why a contractor may suggest a radiological test and a system that addresses more than one contaminant.",
-      },
-      {
         question: "What happens to the system's spent media?",
         answer:
           "Media that captures uranium concentrates radioactivity over time and can become a regulated waste. A licensed contractor handles replacement and disposal properly so it does not accumulate in your home.",
       },
     ],
-    sources: [EPA_TREATMENT, EPA_RADIONUCLIDES, NHDES_RADIONUCLIDES],
+    sources: [EPA_TREATMENT, EPA_RADIONUCLIDES, NHDES_RADIONUCLIDES, USGS_URAN_RADON],
   },
 
   "radon-in-water-treatment": {
     slug: "radon-in-water-treatment",
-    metaTitle: "Radon in Water Treatment in NH | NH Well Water Treatment",
+    metaTitle: "Radon in Well Water Treatment in New Hampshire",
     metaDescription:
-      "Radon in water treatment for New Hampshire wells, by aeration or activated carbon. Free in-home water test and quote from a licensed local contractor.",
+      "Waterborne radon in New Hampshire wells, how it differs from air radon, treatment by aeration or carbon, and a free in-home water test.",
+    h1: "Radon in Well Water Treatment in New Hampshire",
     heroSub:
       "Radon in water is distinct from radon in air and comes from the same New Hampshire bedrock. A licensed local contractor can test your well and recommend the right system. Start with a free in-home water test and quote.",
     intro: [
@@ -299,19 +313,25 @@ export const serviceContent: Record<string, ServiceContent> = {
     },
     faqs: [
       {
-        question: "Is radon in water the same as radon in air?",
+        // Source: radon is part of the NHDES radiological test (DWGB-2-1, DWGB-3-11).
+        question: "How do I test well water for radon?",
         answer:
-          "No, but they are connected. Radon in water is the radon dissolved in your well water, and some of it escapes into indoor air when you use water. Radon in air is the larger health concern, and treating the water reduces the part that comes from your well.",
+          "Waterborne radon is measured by a radiological water test, which a licensed local contractor can collect during a free in-home visit or you can order from a state-accredited laboratory. NHDES recommends testing for radon every three to five years, and it is worth testing your indoor air for radon at the same time.",
+      },
+      {
+        question: "What is the difference between radon in water and radon in air?",
+        answer:
+          "Radon in water is the radon dissolved in your well water, and some of it escapes into indoor air when you use water. Radon in air is the larger health concern, and treating the water reduces the part that comes from your well.",
+      },
+      {
+        question: "How is waterborne radon treated?",
+        answer:
+          "NHDES considers whole-house aeration the preferred treatment, especially at higher levels, because it removes radon without concentrating radioactivity indoors. Granular activated carbon can work at lower levels when placement and disposal are handled correctly.",
       },
       {
         question: "At what level does NHDES recommend treating radon in water?",
         answer:
           "NHDES recommends treating the water when radon is at or above 10,000 picocuries per liter. Between 2,000 and 10,000 picocuries per liter, treatment may be advisable when indoor air radon is also elevated.",
-      },
-      {
-        question: "Is aeration or carbon better for radon?",
-        answer:
-          "NHDES considers whole-house aeration the preferred treatment, especially at higher levels, because it removes radon without concentrating radioactivity indoors. Granular activated carbon can work at lower levels when placement and disposal are handled correctly.",
       },
       {
         question: "Does a carbon filter for radon need special handling?",

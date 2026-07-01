@@ -241,6 +241,35 @@ const schema = [
     </section>
   </div>
 
+  <!-- Next steps: start with a test, plus the higher-ticket whole-house path -->
+  <section class="py-4">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="rounded-xl border border-brand-200 bg-brand-50 p-6 sm:flex sm:items-center sm:justify-between sm:gap-6">
+        <div>
+          <p class="font-semibold text-ink-900">Not sure what is in your water? Start with a test.</p>
+          <p class="mt-1 text-sm text-ink-700">
+            A free in-home water test shows exactly what your well needs.
+            {
+              service.slug !== "whole-house-water-treatment" && (
+                <Fragment>
+                  {" "}For a home with several contaminants, compare
+                  <a href="/services/whole-house-water-treatment" class="text-brand-700 underline"> whole-house water treatment</a>.
+                </Fragment>
+              )
+            }
+          </p>
+        </div>
+        <a
+          href="/services/well-water-testing"
+          class="mt-4 sm:mt-0 inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-accent-500 px-5 py-3 text-sm font-semibold text-ink-900 hover:bg-accent-600 transition-colors"
+        >
+          <Icon name="test-tube" size={18} />
+          Well Water Testing
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- Section 6: FAQ -->
   <div class="bg-ink-50 border-t border-ink-200">
     <FAQ items={content.faqs} />
